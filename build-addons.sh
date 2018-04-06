@@ -51,7 +51,13 @@ mkdir -p builder
 
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
-  ADAPTERS="gpio-adapter serial-adapter zigbee-adapter zwave-adapter"
+  ADAPTERS=(
+    gpio-adapter
+    serial-adapter
+    thing-url-adapter
+    zigbee-adapter
+    zwave-adapter
+  )
 fi
 
 for ADDON_ARCH in ${ADDON_ARCHS}; do
@@ -60,7 +66,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   else
     RPXC=
   fi
-  for ADAPTER in ${ADAPTERS}; do
+  for ADAPTER in ${ADAPTERS[@]}; do
     ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH}"
   done
 done
