@@ -52,6 +52,17 @@ if [ "${ADDON_ARCH}" == "linux-arm" ]; then
   # Setup some cross compiler variables
   SYSROOT=/rpxc/sysroot
   CROSS_COMPILE="arm-linux-gnueabihf-"
+
+  # Under rpxc /rpxc/sysroot/usr/lib/arm-linux-gnueabihf/libudev.so is
+  # a symlink back to /lib/arm-linux-gnueabihf/libudev.so.1.5.0 which
+  # doesn't exist. So we go ahead and create a symlink there and point
+  # it to the same path under /rpxc/sysroot
+  #
+  # My guess is that this would be fine for chrooted apps, but I don't
+  # think that the cross compilers run chrooted.
+  LIBUDEV_SO=/lib/arm-linux-gnueabihf/libudev.so.1.5.0
+  sudo mkdir -p $(dirname ${LIBUDEV_SO})
+  sudo ln -s ${SYSROOT}/${LIBUDEV_SO} ${LIBUDEV_SO}
 fi
 
 if [ "${ADAPTER}" == "zwave-adapter" ]; then
@@ -68,17 +79,6 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
   mv open-zwave-${OPENZWAVE_HASH} ${OPEN_ZWAVE}
 
   if [ "${ADDON_ARCH}" == "linux-arm" ]; then
-    # Under rpxc /rpxc/sysroot/usr/lib/arm-linux-gnueabihf/libudev.so is
-    # a symlink back to /lib/arm-linux-gnueabihf/libudev.so.1.5.0 which
-    # doesn't exist. So we go ahead and create a symlink there and point
-    # it to the same path under /rpxc/sysroot
-    #
-    # My guess is that this would be fine for chrooted apps, but I don't
-    # think that the cross compilers run chrooted.
-    LIBUDEV_SO=/lib/arm-linux-gnueabihf/libudev.so.1.5.0
-    sudo mkdir -p $(dirname ${LIBUDEV_SO})
-    sudo ln -s ${SYSROOT}/${LIBUDEV_SO} ${LIBUDEV_SO}
-
     PREFIX=/usr CFLAGS="--sysroot=${SYSROOT}" LDFLAGS="-v --sysroot=${SYSROOT}" make -C ${OPEN_ZWAVE} CROSS_COMPILE=${CROSS_COMPILE}
 
     # Technically, this is incorrect. We should be setting DESTDIR to ${SYSROOT}.
