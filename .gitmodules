@@ -17,3 +17,6 @@
 	path = zwave-adapter
 	url = https://github.com/mozilla-iot/zwave-adapter
 	branch = master
+[submodule "microblocks-adapter"]
+	path = microblocks-adapter
+	url = https://github.com/hobinjk/microblocks-adapter
