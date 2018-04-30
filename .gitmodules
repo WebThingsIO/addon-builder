@@ -19,4 +19,4 @@
 	branch = master
 [submodule "microblocks-adapter"]
 	path = microblocks-adapter
-	url = https://github.com/hobinjk/microblocks-adapter
+	url = https://github.com/mozilla-iot/microblocks-adapter
