@@ -36,6 +36,12 @@ case "${TRAVIS_OS_NAME}" in
     mkdir -p ./bin
     ln -sf $(which gsha256sum) ./bin/sha256sum
     export PATH=$(pwd)/bin:${PATH}
+    brew install gnu-tar
+    tar() {
+      gtar "$@"
+      return $!
+    }
+    export -f tar
     ;;
 
   *)
