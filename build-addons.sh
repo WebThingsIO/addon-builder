@@ -59,6 +59,7 @@ if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
   ADAPTERS=(
     gpio-adapter
+    homekit-adapter
     microblocks-adapter
     serial-adapter
     thing-url-adapter

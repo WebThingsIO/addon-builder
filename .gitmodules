@@ -20,3 +20,6 @@
 [submodule "microblocks-adapter"]
 	path = microblocks-adapter
 	url = https://github.com/mozilla-iot/microblocks-adapter
+[submodule "homekit-adapter"]
+	path = homekit-adapter
+	url = https://github.com/mozilla-iot/homekit-adapter
