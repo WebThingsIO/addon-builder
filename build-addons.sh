@@ -2,6 +2,8 @@
 
 set -e
 
+NODE_VERSION=$(node --version | cut -d. -f1 | sed 's/^v//')
+
 if [ -z "${TRAVIS_OS_NAME}" ]; then
   # This means we're running locally. Fake out TRAVIS_OS_NAME.
   UNAME=$(uname -s)
@@ -75,7 +77,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
     RPXC=
   fi
   for ADAPTER in ${ADAPTERS[@]}; do
-    ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH}"
+    ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION}"
   done
 done
 

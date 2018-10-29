@@ -12,7 +12,7 @@ SCRIPT_NAME=$(basename $0)
 ADDON_ARCH="$1"
 
 NVM_VERSION="v0.33.8"
-NODE_VERSION="--lts"
+NODE_VERSION="$2"
 
 if [ -z "${ADDON_ARCH}" ]; then
   echo "Usage: ${SCRIPTNAME} addon-arch"
