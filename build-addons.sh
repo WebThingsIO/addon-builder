@@ -76,12 +76,14 @@ if [ -z "${ADAPTERS}" ]; then
       # with Node v10.
       #
       # See: https://github.com/noble/noble/issues/805
+      #
+      # Also, disable zwave-adapter, as openzwave-shared needs to be updated
+      # to work with Node v10.
       ADAPTERS=(
         gpio-adapter
         microblocks-adapter
         serial-adapter
         zigbee-adapter
-        zwave-adapter
       )
       ;;
     *)
