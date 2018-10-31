@@ -63,11 +63,11 @@ if [ "${VERBOSE}" == 1 ]; then
   echo "PULL_REQUEST = '${PULL_REQUEST}'"
 fi
 
-if ! [[ "${PULL_REQUEST}" =~ ^[0-9]+$ ]]; then
-  echo "Expecting numeric pull request; Got '${PULL_REQUEST}'"
-  exit 1
-fi
 if [ -n "${PULL_REQUEST}" ]; then
+  if ! [[ "${PULL_REQUEST}" =~ ^[0-9]+$ ]]; then
+    echo "Expecting numeric pull request; Got '${PULL_REQUEST}'"
+    exit 1
+  fi
   if [ "${#ADAPTERS[@]}" != 1 ]; then
     echo "Must specify exactly one adapter when using pull request option."
     exit 1
