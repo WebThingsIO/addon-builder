@@ -84,6 +84,7 @@ if [ -z "${ADAPTERS}" ]; then
       ADAPTERS=(
         gpio-adapter
         homekit-adapter
+        lg-tv-adapter
         microblocks-adapter
         serial-adapter
         thing-url-adapter
@@ -98,6 +99,7 @@ if [ -z "${ADAPTERS}" ]; then
       # See: https://github.com/noble/noble/issues/805
       ADAPTERS=(
         gpio-adapter
+        lg-tv-adapter
         microblocks-adapter
         serial-adapter
         zigbee-adapter

@@ -23,3 +23,6 @@
 [submodule "homekit-adapter"]
 	path = homekit-adapter
 	url = https://github.com/mozilla-iot/homekit-adapter
+[submodule "lg-tv-adapter"]
+	path = lg-tv-adapter
+	url = https://github.com/mozilla-iot/lg-tv-adapter
