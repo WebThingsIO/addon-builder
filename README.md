@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mozilla-iot/addon-builder.svg?branch=master)](https://travis-ci.org/mozilla-iot/addon-builder)
 
-Addon builder for the Web of Things gateway/
+Addon builder for the Mozilla WebThings Gateway.
 
 This repository will build addons for OSX, Linux, and Raspberry Pi variants
 of the gateway.
