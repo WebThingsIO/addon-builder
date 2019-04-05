@@ -45,11 +45,6 @@ if [ -f "package.json" ]; then
     nvm use ${NODE_VERSION}
   fi
 
-  # On Travis, yarn won't yet be installed, but if run locally on a dev
-  # machine, it most likely will.
-  if ! type yarn >& /dev/null; then
-    npm install -g yarn
-  fi
   rm -rf node_modules
 fi
 

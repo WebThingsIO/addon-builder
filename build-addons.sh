@@ -79,38 +79,16 @@ mkdir -p builder
 
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
-  case "${NODE_VERSION}" in
-    8)
-      ADAPTERS=(
-        gpio-adapter
-        homekit-adapter
-        lg-tv-adapter
-        microblocks-adapter
-        serial-adapter
-        thing-url-adapter
-        zigbee-adapter
-        zwave-adapter
-      )
-      ;;
-    10)
-      # Disable adapters which depend on noble for now, as it fails to build
-      # with Node v10.
-      #
-      # See: https://github.com/noble/noble/issues/805
-      ADAPTERS=(
-        gpio-adapter
-        lg-tv-adapter
-        microblocks-adapter
-        serial-adapter
-        zigbee-adapter
-        zwave-adapter
-      )
-      ;;
-    *)
-      echo "Unsupported NODE_VERSION = ${NODE_VERSION}"
-      exit 1
-      ;;
-  esac
+  ADAPTERS=(
+    gpio-adapter
+    homekit-adapter
+    lg-tv-adapter
+    microblocks-adapter
+    serial-adapter
+    thing-url-adapter
+    zigbee-adapter
+    zwave-adapter
+  )
 fi
 
 for ADDON_ARCH in ${ADDON_ARCHS}; do
