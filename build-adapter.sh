@@ -31,7 +31,7 @@ fi
 echo "============================================================="
 
 if [ -f "package.json" ]; then
-  if [ "${ADDON_ARCH}" == "linux-arm" ]; then
+  if [[ "${ADDON_ARCH}" =~ "linux-" ]]; then
     # Install and configure nvm & node inside the docker container we're running in
     curl -o- https://raw.githubusercontent.com/creationix/nvm/${NVM_VERSION}/install.sh | bash
 
@@ -48,40 +48,49 @@ if [ -f "package.json" ]; then
   rm -rf node_modules
 fi
 
-if [ "${ADDON_ARCH}" == "linux-arm" ]; then
-  # Setup some cross compiler variables
-  SYSROOT=/rpxc/sysroot
-  CROSS_COMPILE="arm-linux-gnueabihf-"
+case "${ADDON_ARCH}" in
 
-  # Under rpxc /rpxc/sysroot/usr/lib/arm-linux-gnueabihf/libudev.so is
-  # a symlink back to /lib/arm-linux-gnueabihf/libudev.so.1.5.0 which
-  # doesn't exist. So we go ahead and create a symlink there and point
-  # it to the same path under /rpxc/sysroot
-  #
-  # My guess is that this would be fine for chrooted apps, but I don't
-  # think that the cross compilers run chrooted.
-  LIBUDEV_SO=/lib/arm-linux-gnueabihf/libudev.so.1.5.0
-  sudo mkdir -p $(dirname ${LIBUDEV_SO})
-  sudo ln -s ${SYSROOT}/${LIBUDEV_SO} ${LIBUDEV_SO}
-fi
+  openwrt-linux-arm)
+    # The ~/.owrt file is created as part of docker-openwrt-toolchain-builder
+    # (look in the Dockerfile).
+    source ~/.owrt
+    ;;
+
+  linux-arm)
+    # Setup some cross compiler variables
+    SYSROOT=/rpxc/sysroot
+    CROSS_COMPILE="arm-linux-gnueabihf-"
+
+    # Under rpxc /rpxc/sysroot/usr/lib/arm-linux-gnueabihf/libudev.so is
+    # a symlink back to /lib/arm-linux-gnueabihf/libudev.so.1.5.0 which
+    # doesn't exist. So we go ahead and create a symlink there and point
+    # it to the same path under /rpxc/sysroot
+    #
+    # My guess is that this would be fine for chrooted apps, but I don't
+    # think that the cross compilers run chrooted.
+    LIBUDEV_SO=/lib/arm-linux-gnueabihf/libudev.so.1.5.0
+    sudo mkdir -p $(dirname ${LIBUDEV_SO})
+    sudo ln -s ${SYSROOT}/${LIBUDEV_SO} ${LIBUDEV_SO}
+    ;;
+esac
 
 if [ "${ADAPTER}" == "zwave-adapter" ]; then
   # Build and install the OpenZWave library.
-  # The hash used here should match the hash from rpi-image-builder
-
-  # Use a hash from the Dev branch, which has CentralScene support
-  OPENZWAVE_HASH="365345c78a1546daab0a717cb5be0b054099358c"
-  OPENZWAVE_ZIP="https://codeload.github.com/OpenZWave/open-zwave/zip/${OPENZWAVE_HASH}"
-  rm -rf openzwave.zip open-zwave-${OPENZWAVE_HASH}
-  curl --output openzwave.zip ${OPENZWAVE_ZIP}
-  unzip -q openzwave.zip
+  # We use our own fork of openzwave so that we can apply some patches which are
+  # OpenWRT specific.
 
   OPEN_ZWAVE="open-zwave"
+  if [[ "${ADDON_ARCH}" =~ ^openwrt-.* ]]; then
+    OZW_BRANCH=moziot-openwrt
+  else
+    OZW_BRANCH=moziot
+  fi
   rm -rf ${OPEN_ZWAVE}
-  mv open-zwave-${OPENZWAVE_HASH} ${OPEN_ZWAVE}
+  git clone -b ${OZW_BRANCH} --single-branch --depth=1 https://github.com/mozilla-iot/open-zwave ${OPEN_ZWAVE}
 
-  if [ "${ADDON_ARCH}" == "linux-arm" ]; then
-    PREFIX=/usr CFLAGS="--sysroot=${SYSROOT}" LDFLAGS="-v --sysroot=${SYSROOT}" make -C ${OPEN_ZWAVE} CROSS_COMPILE=${CROSS_COMPILE}
+  if [[ "${ADDON_ARCH}" =~ "linux-arm" ]]; then
+    ARCH="armv6l"
+    PREFIX=/usr CFLAGS="--sysroot=${SYSROOT} -D_GLIBCXX_USE_CXX11_ABI=0" LDFLAGS="-v --sysroot=${SYSROOT}" make -C ${OPEN_ZWAVE} CROSS_COMPILE=${CROSS_COMPILE} MACHINE=${ARCH}
 
     # Technically, this is incorrect. We should be setting DESTDIR to ${SYSROOT}.
     # By not setting DESTDIR we wind up installing the ARM version of
@@ -89,11 +98,9 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
     # pkg-config to determine where openzwave is installed and expects that the
     # build tree and the install tree are the same. The host build doesn't need to
     # use openzwave, so we can get away with this sleight of hand for now.
-    ARCH="armv6l"
-    INSTALL_OPENZWAVE="PREFIX=/usr make  -C ${OPEN_ZWAVE} CROSS_COMPILE=${CROSS_COMPILE} MACHINE=${ARCH} install"
+    INSTALL_OPENZWAVE="PREFIX=/usr make -C ${OPEN_ZWAVE} CROSS_COMPILE=${CROSS_COMPILE} MACHINE=${ARCH} install"
     sudo ${INSTALL_OPENZWAVE}
     sudo DESTDIR=${SYSROOT} ${INSTALL_OPENZWAVE}
-
   else
     make -C ${OPEN_ZWAVE}
     sudo make -C ${OPEN_ZWAVE} install
@@ -109,7 +116,10 @@ if [ "${ADDON_ARCH}" == "linux-arm" ]; then
   export CXX="${CROSS_COMPILE}g++ ${OPTS}"
 fi
 
+# Build the addon dependencies
 ADDON_ARCH=${ADDON_ARCH} ./package.sh
+
+# Collect the results into a tarball.
 for TARFILE in *-${ADDON_ARCH}*.tgz; do
   if [ -n "${PULL_REQUEST}" ]; then
     NEW_TARFILE="${TARFILE/${ADDON_ARCH}/pr-${PULL_REQUEST}-${ADDON_ARCH}}"
