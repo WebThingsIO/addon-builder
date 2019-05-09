@@ -53,7 +53,7 @@ case "${ADDON_ARCH}" in
   openwrt-linux-arm)
     # The ~/.owrt file is created as part of docker-openwrt-toolchain-builder
     # (look in the Dockerfile).
-    source ~/.owrt
+    source /home/build/.owrt
     ;;
 
   linux-arm)
