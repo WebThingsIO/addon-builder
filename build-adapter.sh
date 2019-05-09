@@ -31,7 +31,7 @@ fi
 echo "============================================================="
 
 if [ -f "package.json" ]; then
-  if [[ "${ADDON_ARCH}" =~ "linux-" ]]; then
+  if [[ "${ADDON_ARCH}" =~ "linux-arm" ]]; then
     # Install and configure nvm & node inside the docker container we're running in
     curl -o- https://raw.githubusercontent.com/creationix/nvm/${NVM_VERSION}/install.sh | bash
 
