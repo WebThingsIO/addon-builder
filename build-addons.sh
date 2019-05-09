@@ -91,6 +91,7 @@ if [ -z "${ADAPTERS}" ]; then
   )
 fi
 
+SKIP_ADAPTERS=()
 for ADDON_ARCH in ${ADDON_ARCHS}; do
   case "${ADDON_ARCH}" in
 
@@ -100,6 +101,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
 
     openwrt-linux-arm)
       RPXC="./bin/owrt"
+      SKIP_ADAPTERS=(homekit-adapter thing-url-adapter)
       ;;
 
     *)
@@ -107,7 +109,13 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
   esac
   for ADAPTER in ${ADAPTERS[@]}; do
-    ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
+    if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${ADAPTER} " ]]; then
+      echo "====="
+      echo "===== Skipping ${ADAPTER} for ${ADDON_ARCH} ====="
+      echo "====="
+    else
+      ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
+    fi
   done
 done
 
