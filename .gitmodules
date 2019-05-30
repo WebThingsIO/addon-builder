@@ -6,9 +6,6 @@
 	path = serial-adapter
 	url = https://github.com/mozilla-iot/serial-adapter
 	branch = master
-[submodule "thing-url-adapter"]
-	path = thing-url-adapter
-	url = https://github.com/mozilla-iot/thing-url-adapter
 [submodule "zigbee-adapter"]
 	path = zigbee-adapter
 	url = https://github.com/mozilla-iot/zigbee-adapter
