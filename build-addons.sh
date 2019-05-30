@@ -84,6 +84,7 @@ if [ -z "${ADAPTERS}" ]; then
     homekit-adapter
     lg-tv-adapter
     microblocks-adapter
+    ruuvitag-adapter
     serial-adapter
     zigbee-adapter
     zwave-adapter
