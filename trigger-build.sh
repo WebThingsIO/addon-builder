@@ -4,7 +4,7 @@ set -e
 SCRIPT_NAME=$(basename $0)
 
 usage() {
-  echo "Usage: ${SCRIPT_NAME} ADAPTER-NAME..."
+  echo "Usage: ${SCRIPT_NAME} [--pr PR] ADAPTER-NAME..."
 }
 
 ENV=
@@ -30,6 +30,7 @@ while getopts "hv-:" opt "$@"; do
 
         help)
           usage
+          exit 1
           ;;
 
         *)
