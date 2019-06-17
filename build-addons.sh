@@ -86,6 +86,7 @@ if [ -z "${ADAPTERS}" ]; then
     microblocks-adapter
     ruuvitag-adapter
     serial-adapter
+    xiaomi-temperature-humidity-sensor-adapter
     zigbee-adapter
     zwave-adapter
   )
