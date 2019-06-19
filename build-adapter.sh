@@ -48,6 +48,16 @@ if [ -f "package.json" ]; then
   rm -rf node_modules
 fi
 
+if [[ "${ADDON_ARCH}" =~ "linux" ]]; then
+  if [ "${ADAPTER}" == "zwave-adapter" ]; then
+    # Install patchelf, which is used by zwave's package.sh
+    sudo apt install -y autoconf
+    rm -rf patchelf
+    git clone https://github.com/NixOS/patchelf
+    (cd patchelf && ./bootstrap.sh && ./configure && make && sudo make install)
+  fi
+fi
+
 case "${ADDON_ARCH}" in
 
   openwrt-linux-arm)
