@@ -2,6 +2,11 @@
 
 set -e
 
+# Ensure that ADAPTERS is an array.
+if [[ "${ADAPTERS}" =~ " " ]]; then
+  ADAPTERS=(${ADAPTERS})
+fi
+
 NODE_VERSION=$(node --version | cut -d. -f1 | sed 's/^v//')
 
 if [ -z "${TRAVIS_OS_NAME}" ]; then
@@ -102,7 +107,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
 
     openwrt-linux-arm)
       RPXC="./bin/owrt"
-      SKIP_ADAPTERS=(homekit-adapter thing-url-adapter)
+      SKIP_ADAPTERS=(homekit-adapter)
       ;;
 
     *)
