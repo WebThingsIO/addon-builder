@@ -37,7 +37,11 @@ case "${TRAVIS_OS_NAME}" in
   linux)
     # Raspberry Pi 2/3 arch is arm_cortex-a7_neon-vfpv4
     # Turris Omnia arch is arm_cortex-a9_vfpv3
-    ADDON_ARCHS="linux-arm linux-x64 openwrt-linux-arm_cortex-a7_neon-vfpv4 openwrt-linux-arm_cortex-a9_vfpv3"
+    if [ "${NODE_VERSION}" == 8 ]; then
+      ADDON_ARCHS="linux-arm linux-x64 openwrt-linux-arm_cortex-a7_neon-vfpv4 openwrt-linux-arm_cortex-a9_vfpv3"
+    else
+      ADDON_ARCHS="linux-arm linux-x64"
+    fi
     ;;
 
   osx)
