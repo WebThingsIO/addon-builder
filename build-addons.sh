@@ -91,6 +91,7 @@ mkdir -p builder
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
   ADAPTERS=(
+    bmp280-adapter
     enocean-adapter
     gpio-adapter
     homekit-adapter

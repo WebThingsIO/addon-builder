@@ -44,3 +44,6 @@
 [submodule "max-adapter"]
 	path = max-adapter
 	url = https://github.com/tim-hellhake/max-adapter
+[submodule "bmp280-adapter"]
+	path = bmp280-adapter
+	url = https://github.com/matco/bmp280-adapter
