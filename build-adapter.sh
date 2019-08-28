@@ -112,7 +112,7 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
     sudo ${INSTALL_OPENZWAVE}
     sudo DESTDIR=${SYSROOT} ${INSTALL_OPENZWAVE}
   else
-    make -C ${OPEN_ZWAVE} ${OZW_FLAGS}
+    CFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0" make -C ${OPEN_ZWAVE} ${OZW_FLAGS}
     sudo make -C ${OPEN_ZWAVE} ${OZW_FLAGS} install
   fi
 fi
