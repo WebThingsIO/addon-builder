@@ -136,6 +136,19 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       RPXC=
       ;;
   esac
+
+  if [ "${NODE_VERSION}" == 12 ]; then
+    SKIP_ADAPTERS=(
+      bmp280-adapter
+      enocean-adapter
+      medisana-ks250-adapter
+      mi-flora-adapter
+      ruuvitag-adapter
+      sensor-tag-adapter
+      xiaomi-temperature-humidity-sensor-adapter
+    )
+  fi
+
   for ADAPTER in ${ADAPTERS[@]}; do
     if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${ADAPTER} " ]]; then
       echo "====="
