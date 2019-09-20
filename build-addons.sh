@@ -142,7 +142,6 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       bmp280-adapter
       enocean-adapter
       medisana-ks250-adapter
-      mi-flora-adapter
       ruuvitag-adapter
       sensor-tag-adapter
       xiaomi-temperature-humidity-sensor-adapter
