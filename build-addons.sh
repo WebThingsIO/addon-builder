@@ -144,7 +144,6 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       medisana-ks250-adapter
       ruuvitag-adapter
       sensor-tag-adapter
-      xiaomi-temperature-humidity-sensor-adapter
     )
   fi
 
