@@ -143,7 +143,6 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       enocean-adapter
       medisana-ks250-adapter
       ruuvitag-adapter
-      sensor-tag-adapter
     )
   fi
 
