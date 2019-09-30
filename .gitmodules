@@ -47,3 +47,6 @@
 [submodule "bmp280-adapter"]
 	path = bmp280-adapter
 	url = https://github.com/matco/bmp280-adapter
+[submodule "blinkt-adapter"]
+	path = blinkt-adapter
+	url = https://github.com/pchri/blinkt-adapter
