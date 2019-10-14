@@ -13,8 +13,13 @@ env:
     - HOMEBREW_TEMP=/tmp/homebrew/tmp
 
 os:
-- linux
-- osx
+  - linux
+  - osx
+
+addons:
+  homebrew:
+    packages:
+      - gnu-tar
 
 before_install:
   - mkdir -p /tmp/homebrew/logs
