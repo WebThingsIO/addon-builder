@@ -142,7 +142,6 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       bmp280-adapter
       enocean-adapter
       medisana-ks250-adapter
-      ruuvitag-adapter
     )
   fi
 
