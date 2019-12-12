@@ -91,7 +91,7 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
 
   OPEN_ZWAVE="open-zwave"
   OZW_FLAGS=
-  OZW_BRANCH=moziot
+  OZW_BRANCH=moziot_test
   if [[ "${ADDON_ARCH}" =~ ^openwrt-.* ]]; then
     OZW_FLAGS="USE_HID=0"
   fi

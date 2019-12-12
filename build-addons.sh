@@ -90,21 +90,21 @@ mkdir -p builder
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
   ADAPTERS=(
-    blinkt-adapter
-    bmp280-adapter
-    enocean-adapter
-    gpio-adapter
-    homekit-adapter
-    lg-tv-adapter
-    max-adapter
-    medisana-ks250-adapter
-    microblocks-adapter
-    mi-flora-adapter
-    ruuvitag-adapter
-    sensor-tag-adapter
-    serial-adapter
-    xiaomi-temperature-humidity-sensor-adapter
-    zigbee-adapter
+#    blinkt-adapter
+#    bmp280-adapter
+#    enocean-adapter
+#    gpio-adapter
+#    homekit-adapter
+#    lg-tv-adapter
+#    max-adapter
+#    medisana-ks250-adapter
+#    microblocks-adapter
+#    mi-flora-adapter
+#    ruuvitag-adapter
+#    sensor-tag-adapter
+#    serial-adapter
+#    xiaomi-temperature-humidity-sensor-adapter
+#    zigbee-adapter
     zwave-adapter
   )
 fi
