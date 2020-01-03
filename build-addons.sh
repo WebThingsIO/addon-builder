@@ -95,6 +95,7 @@ if [ -z "${ADAPTERS}" ]; then
     enocean-adapter
     gpio-adapter
     homekit-adapter
+    insteon-adapter
     lg-tv-adapter
     max-adapter
     medisana-ks250-adapter

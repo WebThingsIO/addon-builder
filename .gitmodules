@@ -50,3 +50,6 @@
 [submodule "blinkt-adapter"]
 	path = blinkt-adapter
 	url = https://github.com/pchri/blinkt-adapter
+[submodule "insteon-adapter"]
+	path = insteon-adapter
+	url = https://github.com/snorp/insteon-adapter
