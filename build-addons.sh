@@ -104,6 +104,7 @@ if [ -z "${ADAPTERS}" ]; then
     ruuvitag-adapter
     sensor-tag-adapter
     serial-adapter
+    tradfri-adapter
     xiaomi-temperature-humidity-sensor-adapter
     zigbee-adapter
     zwave-adapter

@@ -53,3 +53,6 @@
 [submodule "insteon-adapter"]
 	path = insteon-adapter
 	url = https://github.com/snorp/insteon-adapter
+[submodule "tradfri-adapter"]
+	path = tradfri-adapter
+	url = https://github.com/tim-hellhake/tradfri-adapter
