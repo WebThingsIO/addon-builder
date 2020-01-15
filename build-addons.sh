@@ -119,6 +119,12 @@ SKIP_ADAPTERS=(
 for ADDON_ARCH in ${ADDON_ARCHS}; do
   case "${ADDON_ARCH}" in
 
+    darwin-x64)
+      SKIP_ADAPTERS+=(
+        generic-sensors-adapter
+      )
+      ;;
+
     linux-arm)
       RPXC="./bin/rpxc"
       ;;
