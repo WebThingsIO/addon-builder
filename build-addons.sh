@@ -93,6 +93,7 @@ if [ -z "${ADAPTERS}" ]; then
     blinkt-adapter
     bmp280-adapter
     enocean-adapter
+    generic-sensors-adapter
     gpio-adapter
     homekit-adapter
     insteon-adapter
