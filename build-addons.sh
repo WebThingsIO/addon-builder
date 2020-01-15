@@ -126,7 +126,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
 
       # Skip the following Bluetooth adapters, as noble does not currently
       # work on OpenWrt.
-      SKIP_ADAPTERS=(
+      SKIP_ADAPTERS+=(
         homekit-adapter
         medisana-ks250-adapter
         mi-flora-adapter
@@ -142,7 +142,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   esac
 
   if [ "${NODE_VERSION}" == 12 ]; then
-    SKIP_ADAPTERS=(
+    SKIP_ADAPTERS+=(
       bmp280-adapter
       medisana-ks250-adapter
     )
