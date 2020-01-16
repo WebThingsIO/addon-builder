@@ -1,0 +1,29 @@
+name: Build all adapters
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [8, 10, 12]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+    - name: Install dependencies
+      run: |
+        [ ${{ matrix.os }} = macos-latest ] && brew install gnu-tar
+    - name: Build adapters
+      run: |
+        ./build-addons.sh

@@ -9,31 +9,22 @@ fi
 
 NODE_VERSION=$(node --version | cut -d. -f1 | sed 's/^v//')
 
-if [ -z "${TRAVIS_OS_NAME}" ]; then
-  # This means we're running locally. Fake out TRAVIS_OS_NAME.
-  UNAME=$(uname -s)
-  case "$(uname -s)" in
+case "$(uname -s)" in
+  Linux)
+    OS_NAME=linux
+    ;;
 
-    Linux)
-      TRAVIS_OS_NAME=linux
-      ;;
+  Darwin)
+    OS_NAME=osx
+    ;;
 
-    Darwin)
-      TRAVIS_OS_NAME=osx
-      ;;
+  *)
+    echo "Unrecognized uname -s: $(uname -s)"
+    exit 1
+    ;;
+esac
 
-    *)
-      echo "Unrecognized uname -s: ${UNAME}"
-      exit 1
-      ;;
-  esac
-  echo "Faking TRAVIS_OS_NAME = ${TRAVIS_OS_NAME}"
-else
-  echo "TRAVIS_OS_NAME = ${TRAVIS_OS_NAME}"
-fi
-
-case "${TRAVIS_OS_NAME}" in
-
+case "${OS_NAME}" in
   linux)
     # Raspberry Pi 2/3 arch is arm_cortex-a7_neon-vfpv4
     # Turris Omnia arch is arm_cortex-a9_vfpv3
@@ -57,7 +48,7 @@ case "${TRAVIS_OS_NAME}" in
     ;;
 
   *)
-    echo "Unsupported TRAVIS_OS_NAME = ${TRAVIS_OS_NAME}"
+    echo "Unsupported OS_NAME = ${OS_NAME}"
     exit 1
     ;;
 
