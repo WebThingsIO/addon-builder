@@ -1,0 +1,42 @@
+name: Build all adapters
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [
+          ubuntu-latest,
+          macos-latest,
+        ]
+        node: [
+          8,
+          10,
+          12,
+        ]
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+    - name: Install dependencies
+      run: |
+        if [ ${{ matrix.os }} = macos-latest ]; then
+          brew install coreutils gnu-tar pkg-config
+        else
+          sudo apt -qq update
+          sudo apt install -y libudev-dev
+          ./create-rpxc.sh
+          ./create-owrt.sh
+        fi
+    - name: Build adapters
+      run: |
+        ./build-addons.sh
