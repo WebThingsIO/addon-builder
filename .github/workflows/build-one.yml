@@ -1,0 +1,60 @@
+name: Build one adapter
+
+on:
+  repository_dispatch:
+    types: build-adapter
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [
+          ubuntu-latest,
+          macos-latest,
+        ]
+        node: [
+          8,
+          10,
+          12,
+        ]
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+    - name: Install dependencies
+      run: |
+        if [ ${{ matrix.os }} = macos-latest ]; then
+          brew install coreutils gnu-tar pkg-config
+        else
+          sudo apt -qq update
+          sudo apt install -y libudev-dev
+          ./create-rpxc.sh
+          ./create-owrt.sh
+        fi
+        pip install awscli
+    - name: Build adapter
+      env:
+        ADAPTERS: ${{ github.event.client_payload.adapter }}
+      run: |
+        ./build-addons.sh
+    - name: Upload to S3
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-west-2'
+        SOURCE_DIR: 'builder'
+        DEST_DIR: 'builder'
+      run: |
+        aws configure --profile s3-sync-action <<-EOF > /dev/null 2>&1
+        ${AWS_ACCESS_KEY_ID}
+        ${AWS_SECRET_ACCESS_KEY}
+        ${AWS_REGION}
+        text
+        EOF
+        aws s3 sync ${SOURCE_DIR} s3://${AWS_S3_BUCKET}/${DEST_DIR} \
+              --profile s3-sync-action \
+              --no-progress \
+              --acl public-read
