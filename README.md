@@ -7,29 +7,20 @@ Addon builder for the Mozilla WebThings Gateway.
 This repository will build addons for OSX, Linux, and Raspberry Pi variants
 of the gateway.
 
-Use the trigger-build.sh script to initiate a build. Modifying
+Use the trigger-build.py script to initiate a build. Modifying
 any of the files in this repository and pushing them will also
 trigger a build of all of the adapters.
 
-# trigger-build.sh
+# trigger-build.py
 
-The trigger-build.sh will trigger a travis job to start
+The trigger-build.py will trigger a travis job to start
 building an image. You can check the progress by watching
-https://travis-ci.org/mozilla-iot/addon-builder
+https://github.com/mozilla-iot/addon-builder/actions
 
 If you only want to build for one adapter, you can pass that adapter on
 the command line.
 ```
-./trigger-build.sh gpio-adapter
-```
-
-You can also build a pull request of an adapter. Use the --pr option. For example:
-```
-./trigger-build.sh --pr 52 zwave-adapter
-```
-The built tarball will have pr-99 in the filename. For example:
-```
-https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/zwave-adapter-0.7.1-pr-52-linux-arm-v8.tgz
+./trigger-build.py --token <your-token> gpio-adapter
 ```
 
 # Deployed tarballs
