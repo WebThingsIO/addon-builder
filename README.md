@@ -1,7 +1,5 @@
 # Addon builder
 
-[![Build Status](https://travis-ci.org/mozilla-iot/addon-builder.svg?branch=master)](https://travis-ci.org/mozilla-iot/addon-builder)
-
 Addon builder for the Mozilla WebThings Gateway.
 
 This repository will build addons for OSX, Linux, and Raspberry Pi variants
@@ -13,7 +11,7 @@ trigger a build of all of the adapters.
 
 # trigger-build.py
 
-The trigger-build.py will trigger a travis job to start
+The trigger-build.py will trigger a GitHub workflow to start
 building an image. You can check the progress by watching
 https://github.com/mozilla-iot/addon-builder/actions
 
