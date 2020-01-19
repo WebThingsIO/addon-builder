@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -e -x
 
 # Ensure that ADAPTERS is an array.
 if [[ "${ADAPTERS}" =~ " " ]]; then
