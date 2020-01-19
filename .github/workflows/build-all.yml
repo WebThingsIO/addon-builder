@@ -35,7 +35,9 @@ jobs:
           sudo apt -qq update
           sudo apt install -y libudev-dev
           ./create-rpxc.sh
-          ./create-owrt.sh
+          if [ ${{ matrix.node }} = 8 ]; then
+            ./create-owrt.sh
+          fi
         fi
     - name: Build adapters
       run: |

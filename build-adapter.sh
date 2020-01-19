@@ -11,7 +11,7 @@ set -e -x
 SCRIPT_NAME=$(basename $0)
 ADDON_ARCH="$1"
 
-NVM_VERSION="v0.33.8"
+NVM_VERSION="v0.35.2"
 NODE_VERSION="$2"
 PULL_REQUEST="$3"
 
@@ -33,7 +33,7 @@ echo "============================================================="
 if [ -f "package.json" ]; then
   if [[ "${ADDON_ARCH}" =~ "linux-arm" ]]; then
     # Install and configure nvm & node inside the docker container we're running in
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/${NVM_VERSION}/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash
 
     # The following 2 lines are installed into ~/.bashrc by the above,
     # but on the RPi, sourcing ~/.bashrc winds up being a no-op (when sourced
