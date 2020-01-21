@@ -30,6 +30,11 @@ else
 fi
 echo "============================================================="
 
+# Remove .nvmrc to prevent nvm issues below
+if [ -f .nvmrc ]; then
+  rm -f .nvmrc
+fi
+
 if [ -f "package.json" ]; then
   if [[ "${ADDON_ARCH}" =~ "linux-arm" ]]; then
     # Install and configure nvm & node inside the docker container we're running in
