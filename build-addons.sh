@@ -150,7 +150,6 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   if [ "${NODE_VERSION}" == 12 ]; then
     SKIP_ADAPTERS+=(
       bmp280-adapter
-      medisana-ks250-adapter
     )
   fi
 
