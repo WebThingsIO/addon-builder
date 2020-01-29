@@ -50,7 +50,7 @@ if [ -f "package.json" ]; then
     nvm use ${NODE_VERSION}
 
     if [ "${ADAPTER}" == "rf433-adapter" ]; then
-      wget https://project-downloads.drogon.net/wiringpi-latest.deb
+      curl -o wiringpi-latest.deb -L https://project-downloads.drogon.net/wiringpi-latest.deb
       sudo dpkg -i wiringpi-latest.deb
       rm wiringpi-latest.deb
     fi
