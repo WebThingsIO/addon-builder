@@ -48,6 +48,12 @@ if [ -f "package.json" ]; then
     # We need to install the version of node into the container
     nvm install ${NODE_VERSION}
     nvm use ${NODE_VERSION}
+
+    if [ "${ADAPTER}" == "rf433-adapter" ]; then
+      wget https://project-downloads.drogon.net/wiringpi-latest.deb
+      sudo dpkg -i wiringpi-latest.deb
+      rm wiringpi-latest.deb
+    fi
   fi
 
   rm -rf node_modules
