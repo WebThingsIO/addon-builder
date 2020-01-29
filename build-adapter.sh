@@ -48,16 +48,6 @@ if [ -f "package.json" ]; then
     # We need to install the version of node into the container
     nvm install ${NODE_VERSION}
     nvm use ${NODE_VERSION}
-
-    if [ "${ADAPTER}" == "rf433-adapter" ]; then
-      git clone https://github.com/WiringPi/WiringPi
-      cd WiringPi
-      ./build
-      cd ..
-      export CPATH=/usr/local/include
-      export LIBRARY_PATH=/usr/local/lib
-      export LD_LIBRARY_PATH=/usr/local/lib
-    fi
   fi
 
   rm -rf node_modules
@@ -130,6 +120,41 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
     CFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0" make -C ${OPEN_ZWAVE} ${OZW_FLAGS}
     sudo make -C ${OPEN_ZWAVE} ${OZW_FLAGS} install
   fi
+fi
+
+if [ "${ADAPTER}" == "rf433-adapter" ]; then
+  WIRING_PI="WiringPi"
+  rm -rf ${WIRING_PI}
+  git clone https://github.com/CoRfr/WiringPi
+  cd ${WIRING_PI}
+  git checkout 33fbcd7e503b76fcbef77a575303d31e105abb14
+
+  if [[ "${ADDON_ARCH}" =~ "linux-arm" ]]; then
+    (
+      export CC="${CROSS_COMPILE}gcc"
+      export EXTRA_CFLAGS="-marm -march=armv6 -mfpu=vfp -mfloat-abi=hard -I$(pwd)/wiringPi"
+      for dir in wiringPi devLib; do
+        cd ${dir}
+        make
+        sudo -E make install
+        cd ..
+      done
+    )
+
+    cd ..
+
+    cd /usr/local/lib
+    sudo find . -name 'libwiringPi.so.*' -exec ln -sf {} libwiringPi.so \;
+    sudo find . -name 'libwiringPiDev.so.*' -exec ln -sf {} libwiringPiDev.so \;
+    cd -
+  else
+    ./build
+    cd ..
+  fi
+
+  export CPATH=/usr/local/include
+  export LIBRARY_PATH=/usr/local/lib
+  export LD_LIBRARY_PATH=/usr/local/lib
 fi
 
 if [ "${ADDON_ARCH}" == "linux-arm" ]; then
