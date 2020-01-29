@@ -147,6 +147,8 @@ if [ "${ADAPTER}" == "rf433-adapter" ]; then
     sudo find . -name 'libwiringPi.so.*' -exec ln -sf {} libwiringPi.so \;
     sudo find . -name 'libwiringPiDev.so.*' -exec ln -sf {} libwiringPiDev.so \;
     cd -
+
+    export EXTRA_CFLAGS="-marm -march=armv6 -mfpu=vfp -mfloat-abi=hard -I/usr/local/include -L/usr/local/lib"
   else
     ./build
     cd ..
