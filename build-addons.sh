@@ -93,6 +93,7 @@ if [ -z "${ADAPTERS}" ]; then
     medisana-ks250-adapter
     microblocks-adapter
     mi-flora-adapter
+    rf433-adapter
     ruuvitag-adapter
     sensor-tag-adapter
     serial-adapter

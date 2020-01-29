@@ -62,3 +62,6 @@
 [submodule "generic-sensors-adapter"]
 	path = generic-sensors-adapter
 	url = https://github.com/rzr/mozilla-iot-generic-sensors-adapter
+[submodule "rf433-adapter"]
+	path = rf433-adapter
+	url = https://github.com/tim-hellhake/rf433-adapter
