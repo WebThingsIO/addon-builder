@@ -117,6 +117,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         bmp280-adapter
         generic-sensors-adapter
         gpio-adapter
+        rf433-adapter
       )
       ;;
 
