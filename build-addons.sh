@@ -106,7 +106,7 @@ if [ -z "${ADAPTERS}" ]; then
 fi
 
 SKIP_ADAPTERS=(
-    enocean-adapter
+  enocean-adapter
 )
 for ADDON_ARCH in ${ADDON_ARCHS}; do
   case "${ADDON_ARCH}" in
@@ -123,6 +123,13 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
 
     linux-arm)
       RPXC="./bin/rpxc"
+      ;;
+
+    linux-x64)
+      SKIP_ADAPTERS+=(
+        blinkt-adapter
+        rf433-adapter
+      )
       ;;
 
     openwrt-linux-*)
