@@ -53,8 +53,10 @@ if [ -f "package.json" ]; then
       git clone https://github.com/WiringPi/WiringPi
       cd WiringPi
       ./build
-      sudo ldconfig
       cd ..
+      export CPATH=/usr/local/include
+      export LIBRARY_PATH=/usr/local/lib
+      export LD_LIBRARY_PATH=/usr/local/lib
     fi
   fi
 
