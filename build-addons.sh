@@ -157,6 +157,12 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
   esac
 
+  if [[ ${NODE_VERSION} != 8 ]]; then
+    SKIP_ADAPTERS+=(
+      rf433-adapter
+    )
+  fi
+
   if [ "${NODE_VERSION}" == 12 ]; then
     SKIP_ADAPTERS+=(
       bmp280-adapter
