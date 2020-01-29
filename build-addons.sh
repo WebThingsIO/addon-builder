@@ -105,9 +105,9 @@ if [ -z "${ADAPTERS}" ]; then
   )
 fi
 
-SKIP_ADAPTERS=(
-  enocean-adapter
-)
+#SKIP_ADAPTERS=(
+#  enocean-adapter
+#)
 for ADDON_ARCH in ${ADDON_ARCHS}; do
   case "${ADDON_ARCH}" in
 
