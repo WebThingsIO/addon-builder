@@ -130,6 +130,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
 
       SKIP_ADAPTERS+=(
         blinkt-adapter
+        rf433-adapter
       )
 
       # Skip the following Bluetooth adapters, as noble does not currently
