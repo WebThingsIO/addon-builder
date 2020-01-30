@@ -32,6 +32,8 @@ jobs:
           sudo apt install -y libudev-dev
           ./create-rpxc.sh
         fi
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade awscli
     - name: Build adapter
       env:
         ADAPTERS: ${{ github.event.client_payload.adapter }}

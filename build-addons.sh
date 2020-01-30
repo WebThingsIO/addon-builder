@@ -26,7 +26,7 @@ esac
 
 case "${OS_NAME}" in
   linux)
-    ADDON_ARCHS="linux-arm linux-x64"
+    ADDON_ARCHS="linux-x64 linux-arm"
     ;;
 
   osx)
@@ -116,7 +116,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-arm)
-      RPXC="./bin/rpxc"
+      RPXC="$(pwd)/bin/rpxc"
       ;;
 
     linux-x64)
@@ -137,7 +137,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
     )
   fi
 
-  if [ "${NODE_VERSION}" == 12 ]; then
+  if [[ ${NODE_VERSION} == 12 ]]; then
     SKIP_ADAPTERS+=(
       bmp280-adapter
     )
@@ -148,8 +148,13 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       echo "====="
       echo "===== Skipping ${ADAPTER} for ${ADDON_ARCH} ====="
       echo "====="
-    else
+    elif [ -n "$RPXC" ]; then
       ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
+    else
+      here=$(pwd)
+      cd ${ADAPTER}
+      ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} ${PULL_REQUEST}
+      cd "${here}"
     fi
   done
 done
