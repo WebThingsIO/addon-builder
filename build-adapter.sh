@@ -65,12 +65,6 @@ fi
 
 case "${ADDON_ARCH}" in
 
-  openwrt-linux-*)
-    # The ~/.owrt file is created as part of docker-openwrt-toolchain-builder
-    # (look in the Dockerfile).
-    source /home/build/.owrt
-    ;;
-
   linux-arm)
     # Setup some cross compiler variables
     SYSROOT=/rpxc/sysroot
@@ -97,9 +91,6 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
   OPEN_ZWAVE="open-zwave"
   OZW_FLAGS=
   OZW_BRANCH=moziot
-  if [[ "${ADDON_ARCH}" =~ ^openwrt-.* ]]; then
-    OZW_FLAGS="USE_HID=0"
-  fi
   rm -rf ${OPEN_ZWAVE}
   git clone -b ${OZW_BRANCH} --single-branch --depth=1 https://github.com/mozilla-iot/open-zwave ${OPEN_ZWAVE}
 

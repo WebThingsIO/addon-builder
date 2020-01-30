@@ -26,13 +26,7 @@ esac
 
 case "${OS_NAME}" in
   linux)
-    # Raspberry Pi 2/3 arch is arm_cortex-a7_neon-vfpv4
-    # Turris Omnia arch is arm_cortex-a9_vfpv3
-    if [ "${NODE_VERSION}" == 8 ]; then
-      ADDON_ARCHS="linux-arm linux-x64 openwrt-linux-arm_cortex-a7_neon-vfpv4 openwrt-linux-arm_cortex-a9_vfpv3"
-    else
-      ADDON_ARCHS="linux-arm linux-x64"
-    fi
+    ADDON_ARCHS="linux-arm linux-x64"
     ;;
 
   osx)
@@ -129,26 +123,6 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       SKIP_ADAPTERS+=(
         blinkt-adapter
         rf433-adapter
-      )
-      ;;
-
-    openwrt-linux-*)
-      RPXC="./bin/owrt-${ADDON_ARCH/openwrt-linux-/}"
-
-      SKIP_ADAPTERS+=(
-        blinkt-adapter
-        rf433-adapter
-      )
-
-      # Skip the following Bluetooth adapters, as noble does not currently
-      # work on OpenWrt.
-      SKIP_ADAPTERS+=(
-        homekit-adapter
-        medisana-ks250-adapter
-        mi-flora-adapter
-        ruuvitag-adapter
-        sensor-tag-adapter
-        xiaomi-temperature-humidity-sensor-adapter
       )
       ;;
 
