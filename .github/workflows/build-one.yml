@@ -14,9 +14,9 @@ jobs:
           macos-latest,
         ]
         node: [
-          8,
-          10,
-          12,
+          '8',
+          '10',
+          '12',
         ]
     steps:
     - uses: actions/checkout@v1
@@ -32,8 +32,6 @@ jobs:
           sudo apt install -y libudev-dev
           ./create-rpxc.sh
         fi
-        python -m pip install --upgrade pip
-        pip install awscli
     - name: Build adapter
       env:
         ADAPTERS: ${{ github.event.client_payload.adapter }}
