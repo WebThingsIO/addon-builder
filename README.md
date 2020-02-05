@@ -1,17 +1,17 @@
-# Addon builder
+# Add-on builder
 
-Addon builder for the Mozilla WebThings Gateway.
+Add-on builder for the Mozilla WebThings Gateway.
 
-This repository will build addons for OSX, Linux, and Raspberry Pi variants
+This repository will build addons for macOS, Linux, and Raspberry Pi variants
 of the gateway.
 
-Use the trigger-build.py script to initiate a build. Modifying
+Use the `trigger-build.py` script to initiate a build. Modifying
 any of the files in this repository and pushing them will also
 trigger a build of all of the adapters.
 
-# trigger-build.py
+# `trigger-build.py`
 
-The trigger-build.py will trigger a GitHub workflow to start
+The `trigger-build.py` will trigger a GitHub workflow to start
 building an image. You can check the progress by watching
 https://github.com/mozilla-iot/addon-builder/actions
 
@@ -35,18 +35,7 @@ aws s3 ls s3://mozilla-gateway-addons/builder/
 ```
 to view the addons which have been built (but not yet deployed).
 
-# Building the docker cross compiler image
+# Building the Docker cross-compiler image
 
-To build the docker image, do the following steps:
-```
-git clone https://github.com/mozilla-iot/docker-raspberry-pi-cross-compiler.git
-cd docker-raspberry-pi-cross-compiler
-git checkout rpxc-stretch
-./build.sh
-```
-If you're not dhylands then you'll need to change the username appropriately,
-and also modify the create-rpxc.sh script in
-[this](https://github.com/mozilla-iot/addon-builder/blob/master/create-rpxc.sh)
-repository and the
-[rpi-image-builder](https://github.com/mozilla-iot/rpi-image-builder/blob/master/create-rpxc.sh)
-repository.
+For instructions on rebuilding the cross-compiler toolchain, see
+[here](https://github.com/mozilla-iot/docker-raspberry-pi-cross-compiler).
