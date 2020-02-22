@@ -41,7 +41,6 @@ jobs:
             libudev-dev \
             pkg-config \
             qemu-user-static
-          ./create-rpxc.sh
         fi
     - name: Build adapters
       run: |
