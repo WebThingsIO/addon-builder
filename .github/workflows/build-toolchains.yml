@@ -1,0 +1,38 @@
+name: Build and push toolchain images
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - toolchains/**
+      - .github/workflows/build-toolchains.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [
+          '8',
+          '10',
+          '12',
+        ]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+          sudo apt -qq update
+          sudo apt install --no-install-recommends -y \
+            qemu-user-static \
+            binfmt-support
+      - name: Build and push images
+        run: |
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+          for toolchain in toolchain/*; do
+            image=${toolchain/\//-}
+            image=${image}-${{ matrix.node-version }}
+            docker build --build-arg NODE_VERSION=${{ matrix.node-version }} -t ${image} $toolchain
+            docker tag ${image} mozillaiot/${image}:latest
+            docker push mozillaiot/${image}:latest
+          done
