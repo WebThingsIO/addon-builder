@@ -10,6 +10,7 @@ RUN apt update && \
         build-essential \
         git \
         libudev-dev \
+        pkg-config \
         python \
         sudo && \
     apt clean && \

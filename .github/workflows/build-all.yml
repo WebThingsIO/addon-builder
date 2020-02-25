@@ -33,7 +33,14 @@ jobs:
           brew install coreutils gnu-tar pkg-config
         else
           sudo apt -qq update
-          sudo apt install -y libudev-dev
+          sudo apt install --no-install-recommends -y \
+            autoconf \
+            automake \
+            binfmt-support \
+            build-essential \
+            libudev-dev \
+            pkg-config \
+            qemu-user-static
           ./create-rpxc.sh
         fi
     - name: Build adapters
