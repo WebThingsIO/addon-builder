@@ -21,4 +21,5 @@ RUN apt update && \
         nvm install ${NODE_VERSION} && \
         nvm use ${NODE_VERSION} && \
         npm config -g set unsafe-perm true && \
-        nvm install-latest-npm"
+        nvm install-latest-npm && \
+        nvm cache clear"
