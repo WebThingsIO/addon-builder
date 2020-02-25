@@ -6,6 +6,7 @@ RUN apt update && \
     apt dist-upgrade -y && \
     apt install -y \
         autoconf \
+        automake \
         build-essential \
         git \
         libudev-dev \
