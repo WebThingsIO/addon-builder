@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - toolchains/**
+      - toolchain/**
       - .github/workflows/build-toolchains.yml
 
 jobs:
