@@ -34,8 +34,3 @@ or
 aws s3 ls s3://mozilla-gateway-addons/builder/
 ```
 to view the addons which have been built (but not yet deployed).
-
-# Building the Docker cross-compiler image
-
-For instructions on rebuilding the cross-compiler toolchain, see
-[here](https://github.com/mozilla-iot/docker-raspberry-pi-cross-compiler).

@@ -26,14 +26,11 @@ esac
 
 case "${OS_NAME}" in
   linux)
-    ADDON_ARCHS="linux-x64 linux-arm"
+    ADDON_ARCHS="linux-x64 linux-arm linux-arm64"
     ;;
 
   osx)
     ADDON_ARCHS="darwin-x64"
-    mkdir -p ./bin
-    ln -sf $(which gsha256sum) ./bin/sha256sum
-    export PATH=$(pwd)/bin:${PATH}
     tar() {
       gtar "$@"
       return $!
@@ -75,25 +72,25 @@ mkdir -p builder
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
   ADAPTERS=(
-    blinkt-adapter
-    bmp280-adapter
-    enocean-adapter
-    generic-sensors-adapter
+#    blinkt-adapter
+#    bmp280-adapter
+#    enocean-adapter
+#    generic-sensors-adapter
     gpio-adapter
     homekit-adapter
-    insteon-adapter
+#    insteon-adapter
     lg-tv-adapter
-    max-adapter
-    medisana-ks250-adapter
+#    max-adapter
+#    medisana-ks250-adapter
     microblocks-adapter
-    mi-flora-adapter
-    rf433-adapter
-    ruuvitag-adapter
-    sensor-tag-adapter
+#    mi-flora-adapter
+#    rf433-adapter
+#    ruuvitag-adapter
+#    sensor-tag-adapter
     serial-adapter
-    tradfri-adapter
-    x10-cm11-adapter
-    xiaomi-temperature-humidity-sensor-adapter
+#    tradfri-adapter
+#    x10-cm11-adapter
+#    xiaomi-temperature-humidity-sensor-adapter
     zigbee-adapter
     zwave-adapter
   )
@@ -113,7 +110,15 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-arm)
-      RPXC="$(pwd)/bin/rpxc"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
+      ;;
+
+    linux-arm64)
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
+      SKIP_ADAPTERS+=(
+        blinkt-adapter
+        rf433-adapter
+      )
       ;;
 
     linux-x64)
@@ -146,7 +151,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       echo "===== Skipping ${ADAPTER} for ${ADDON_ARCH} ====="
       echo "====="
     elif [ -n "$RPXC" ]; then
-      ${RPXC} bash -c "cd ${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
+      ${RPXC} bash -c "cd /build/${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
     else
       here=$(pwd)
       cd ${ADAPTER}
