@@ -97,6 +97,8 @@ if [ -z "${ADAPTERS}" ]; then
 fi
 
 for ADDON_ARCH in ${ADDON_ARCHS}; do
+  SKIP_ADAPTERS=()
+
   case "${ADDON_ARCH}" in
 
     darwin-x64)
