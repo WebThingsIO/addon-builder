@@ -8,6 +8,7 @@ RUN apt update && \
         autoconf \
         automake \
         build-essential \
+        curl \
         git \
         libudev-dev \
         pkg-config \

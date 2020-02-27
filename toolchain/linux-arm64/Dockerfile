@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-64-debian:buster
+FROM arm64v8/debian:buster
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
@@ -8,6 +8,7 @@ RUN apt update && \
         autoconf \
         automake \
         build-essential \
+        curl \
         git \
         libudev-dev \
         pkg-config \
