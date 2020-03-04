@@ -136,14 +136,11 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   esac
 
   if [[ ${NODE_VERSION} != 8 ]]; then
+    # rf433-adapter isn't dependent on a specific node version. rather, we
+    # build it with the addon-builder in order to cross-compile a single native
+    # (non-node) dependency.
     SKIP_ADAPTERS+=(
       rf433-adapter
-    )
-  fi
-
-  if [[ ${NODE_VERSION} == 12 ]]; then
-    SKIP_ADAPTERS+=(
-      bmp280-adapter
     )
   fi
 
