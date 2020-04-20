@@ -65,3 +65,6 @@
 [submodule "rf433-adapter"]
 	path = rf433-adapter
 	url = https://github.com/tim-hellhake/rf433-adapter
+[submodule "piface-adapter"]
+	path = piface-adapter
+	url = https://github.com/tim-hellhake/piface-adapter

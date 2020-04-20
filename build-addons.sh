@@ -84,6 +84,7 @@ if [ -z "${ADAPTERS}" ]; then
     medisana-ks250-adapter
     microblocks-adapter
     mi-flora-adapter
+    piface-adapter
     rf433-adapter
     ruuvitag-adapter
     sensor-tag-adapter
@@ -107,6 +108,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         bmp280-adapter
         generic-sensors-adapter
         gpio-adapter
+        piface-adapter
         rf433-adapter
       )
       ;;
@@ -119,6 +121,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
+        piface-adapter
         rf433-adapter
       )
       ;;
@@ -126,6 +129,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
     linux-x64)
       SKIP_ADAPTERS+=(
         blinkt-adapter
+        piface-adapter
         rf433-adapter
       )
       ;;
