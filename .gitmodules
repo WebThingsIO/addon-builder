@@ -68,3 +68,6 @@
 [submodule "piface-adapter"]
 	path = piface-adapter
 	url = https://github.com/tim-hellhake/piface-adapter
+[submodule "sense-hat-webthing"]
+	path = sense-hat-webthing
+	url = https://github.com/rzr/sense-hat-webthing
