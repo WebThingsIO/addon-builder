@@ -13,13 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [
-          '8',
-          '10',
-          '12',
+        language: [
+          'node:8',
+          'node:10',
+          'node:12',
+          'python:3.5.9',
+          'python:3.6.10',
+          'python:3.7.7',
+          'python:3.8.2',
         ]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Install dependencies
         run: |
           sudo apt -qq update
@@ -29,10 +33,17 @@ jobs:
       - name: Build and push images
         run: |
           echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+          language=$(echo ${{ matrix.language }} | cut -d: -f1)
+          version=$(echo ${{ matrix.language }} | cut -d: -f2)
+          short_version=$(echo $version | cut -d. -f 1-2)
           for toolchain in toolchain/*; do
-            image=${toolchain/\//-}
-            image=${image}-${{ matrix.node-version }}
-            docker build --build-arg NODE_VERSION=${{ matrix.node-version }} -t ${image} $toolchain
+            image=$(echo "$toolchain" | sed 's/\//-/g')
+            image=${image}-${language}-${short_version}
+            if [ $language = node ]; then
+              docker build --build-arg NODE_VERSION=${version} -t ${image} ${toolchain}/${language}
+            else
+              docker build --build-arg PYTHON_VERSION=${version} -t ${image} ${toolchain}/${language}
+            fi
             docker tag ${image} mozillaiot/${image}:latest
             docker push mozillaiot/${image}:latest
           done

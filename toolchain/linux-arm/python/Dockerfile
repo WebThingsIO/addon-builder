@@ -1,0 +1,29 @@
+FROM balenalib/raspberry-pi-debian:buster
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG PYTHON_VERSION
+RUN apt update && \
+    apt dist-upgrade -y && \
+    apt install -y \
+        autoconf \
+        automake \
+        build-essential \
+        curl \
+        git \
+        libssl-dev \
+        libudev-dev \
+        openssl \
+        pkg-config \
+        sudo \
+        wget \
+        zlib1g-dev && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    wget "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz" && \
+    tar xJf "Python-${PYTHON_VERSION}.tar.xz" && \
+    cd "Python-${PYTHON_VERSION}" && \
+    ./configure --prefix=/usr/local && \
+    make && \
+    make install && \
+    cd .. && \
+    rm -rf "Python-${PYTHON_VERSION}"

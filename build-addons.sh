@@ -7,7 +7,14 @@ if [[ "${ADAPTERS}" =~ " " ]]; then
   ADAPTERS=(${ADAPTERS})
 fi
 
-NODE_VERSION=$(node --version | cut -d. -f1 | sed 's/^v//')
+NODE_VERSION=$1
+PYTHON_VERSION=$2
+
+if [[ ( "$NODE_VERSION" == "" && "$PYTHON_VERSION" == "" ) ||
+      ( "$NODE_VERSION" != "" && "$PYTHON_VERSION" != "" ) ]]; then
+  echo "Skipping overlapping matrix builds"
+  exit 0
+fi
 
 case "$(uname -s)" in
   Linux)
@@ -72,28 +79,28 @@ mkdir -p builder
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
   ADAPTERS=(
-    blinkt-adapter
-    bmp280-adapter
-    enocean-adapter
-    generic-sensors-adapter
-    gpio-adapter
-    homekit-adapter
-    insteon-adapter
-    lg-tv-adapter
-    max-adapter
-    medisana-ks250-adapter
-    microblocks-adapter
-    mi-flora-adapter
-    piface-adapter
-    rf433-adapter
-    ruuvitag-adapter
-    sensor-tag-adapter
-    serial-adapter
-    tradfri-adapter
-    x10-cm11-adapter
-    xiaomi-temperature-humidity-sensor-adapter
-    zigbee-adapter
-    zwave-adapter
+    blinkt-adapter:node
+    bmp280-adapter:node
+    enocean-adapter:node
+    generic-sensors-adapter:node
+    gpio-adapter:node
+    homekit-adapter:node
+    insteon-adapter:node
+    lg-tv-adapter:node
+    max-adapter:node
+    medisana-ks250-adapter:node
+    microblocks-adapter:node
+    mi-flora-adapter:node
+    piface-adapter:node
+    rf433-adapter:node
+    ruuvitag-adapter:node
+    sensor-tag-adapter:node
+    serial-adapter:node
+    tradfri-adapter:node
+    x10-cm11-adapter:node
+    xiaomi-temperature-humidity-sensor-adapter:node
+    zigbee-adapter:node
+    zwave-adapter:node
   )
 fi
 
@@ -103,6 +110,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   case "${ADDON_ARCH}" in
 
     darwin-x64)
+      RPXC=
       SKIP_ADAPTERS+=(
         blinkt-adapter
         bmp280-adapter
@@ -114,11 +122,11 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-arm)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-{{language}}-{{version}}"
       ;;
 
     linux-arm64)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-{{language}}-{{version}}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
         piface-adapter
@@ -127,6 +135,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-x64)
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-{{language}}-{{version}}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
         piface-adapter
@@ -149,16 +158,29 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   fi
 
   for ADAPTER in ${ADAPTERS[@]}; do
-    if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${ADAPTER} " ]]; then
+    adapter=$(echo "$ADAPTER" | cut -d: -f1)
+    adapter_language=$(echo "$ADAPTER" | cut -d: -f2)
+    language_version="$NODE_VERSION"
+    if [ "$adapter_language" = "python" ]; then
+      language_version="$PYTHON_VERSION"
+    fi
+
+    if [[ ( "$adapter_language" == "node" && "$NODE_VERSION" == "" ) ||
+          ( "$adapter_language" == "python" && "$PYTHON_VERSION" == "" ) ]]; then
+      continue
+    fi
+
+    if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${adapter} " ]]; then
       echo "====="
-      echo "===== Skipping ${ADAPTER} for ${ADDON_ARCH} ====="
+      echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
       echo "====="
     elif [ -n "$RPXC" ]; then
-      ${RPXC} bash -c "cd /build/${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
+      rpxc=$(echo "$RPXC" | sed -e "s/{{language}}/$adapter_language/" -e "s/{{version}}/$language_version/")
+      ${rpxc} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
     else
       here=$(pwd)
-      cd ${ADAPTER}
-      ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} ${PULL_REQUEST}
+      cd ${adapter}
+      ../build-adapter.sh ${ADDON_ARCH} ${PULL_REQUEST}
       cd "${here}"
     fi
   done
