@@ -7,14 +7,8 @@ if [[ "${ADAPTERS}" =~ " " ]]; then
   ADAPTERS=(${ADAPTERS})
 fi
 
-NODE_VERSION=$1
-PYTHON_VERSION=$2
-
-if [[ ( "$NODE_VERSION" == "" && "$PYTHON_VERSION" == "" ) ||
-      ( "$NODE_VERSION" != "" && "$PYTHON_VERSION" != "" ) ]]; then
-  echo "Skipping overlapping matrix builds"
-  exit 0
-fi
+LANGUAGE_NAME=$1
+LANGUAGE_VERSION=$2
 
 case "$(uname -s)" in
   Linux)
@@ -122,11 +116,11 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-arm)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-{{language}}-{{version}}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
       ;;
 
     linux-arm64)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-{{language}}-{{version}}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
         piface-adapter
@@ -135,7 +129,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-x64)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-{{language}}-{{version}}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
         piface-adapter
@@ -148,8 +142,8 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
   esac
 
-  if [[ ${NODE_VERSION} != 8 ]]; then
-    # rf433-adapter isn't dependent on a specific node version. rather, we
+  if [[ "${LANGUAGE_NAME}" == "node" && "${LANGUAGE_VERSION}" != "8" ]]; then
+    # rf433-adapter isn't dependent on a specific node version. Rather, we
     # build it with the addon-builder in order to cross-compile a single native
     # (non-node) dependency.
     SKIP_ADAPTERS+=(
@@ -160,13 +154,8 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   for ADAPTER in ${ADAPTERS[@]}; do
     adapter=$(echo "$ADAPTER" | cut -d: -f1)
     adapter_language=$(echo "$ADAPTER" | cut -d: -f2)
-    language_version="$NODE_VERSION"
-    if [ "$adapter_language" = "python" ]; then
-      language_version="$PYTHON_VERSION"
-    fi
 
-    if [[ ( "$adapter_language" == "node" && "$NODE_VERSION" == "" ) ||
-          ( "$adapter_language" == "python" && "$PYTHON_VERSION" == "" ) ]]; then
+    if [[ "$adapter_language" != "$LANGUAGE_NAME" ]]; then
       continue
     fi
 
@@ -175,8 +164,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
       echo "====="
     elif [ -n "$RPXC" ]; then
-      rpxc=$(echo "$RPXC" | sed -e "s/{{language}}/$adapter_language/" -e "s/{{version}}/$language_version/")
-      ${rpxc} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
+      ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
     else
       here=$(pwd)
       cd ${adapter}
@@ -186,9 +174,10 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   done
 done
 
-ls -l builder
-echo "Download links:"
-for FILE in builder/*.tgz; do
-  CHECKSUM=$(cat ${FILE}.sha256sum | cut -f 1 -d ' ')
-  echo "  https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/$(basename ${FILE}) ${CHECKSUM}"
-done
+if compgen -G "builder/*.tgz" >/dev/null; then
+  echo "Download links:"
+  for FILE in builder/*.tgz; do
+    CHECKSUM=$(cat ${FILE}.sha256sum | cut -f 1 -d ' ')
+    echo "  https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/$(basename ${FILE}) ${CHECKSUM}"
+  done
+fi
