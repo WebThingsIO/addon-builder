@@ -76,6 +76,7 @@ if [ -z "${ADAPTERS}" ]; then
     blinkt-adapter:node
     bmp280-adapter:node
     enocean-adapter:node
+    eufy-adapter:python
     generic-sensors-adapter:node
     gpio-adapter:node
     homekit-adapter:node

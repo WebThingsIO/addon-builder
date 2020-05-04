@@ -68,3 +68,6 @@
 [submodule "piface-adapter"]
 	path = piface-adapter
 	url = https://github.com/tim-hellhake/piface-adapter
+[submodule "eufy-adapter"]
+	path = eufy-adapter
+	url = https://github.com/mozilla-iot/eufy-adapter
