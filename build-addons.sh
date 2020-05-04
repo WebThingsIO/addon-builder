@@ -7,7 +7,8 @@ if [[ "${ADAPTERS}" =~ " " ]]; then
   ADAPTERS=(${ADAPTERS})
 fi
 
-NODE_VERSION=$(node --version | cut -d. -f1 | sed 's/^v//')
+LANGUAGE_NAME=$1
+LANGUAGE_VERSION=$2
 
 case "$(uname -s)" in
   Linux)
@@ -72,28 +73,28 @@ mkdir -p builder
 if [ -z "${ADAPTERS}" ]; then
   # No adapters were provided via the environment, build them all
   ADAPTERS=(
-    blinkt-adapter
-    bmp280-adapter
-    enocean-adapter
-    generic-sensors-adapter
-    gpio-adapter
-    homekit-adapter
-    insteon-adapter
-    lg-tv-adapter
-    max-adapter
-    medisana-ks250-adapter
-    microblocks-adapter
-    mi-flora-adapter
-    piface-adapter
-    rf433-adapter
-    ruuvitag-adapter
-    sensor-tag-adapter
-    serial-adapter
-    tradfri-adapter
-    x10-cm11-adapter
-    xiaomi-temperature-humidity-sensor-adapter
-    zigbee-adapter
-    zwave-adapter
+    blinkt-adapter:node
+    bmp280-adapter:node
+    enocean-adapter:node
+    generic-sensors-adapter:node
+    gpio-adapter:node
+    homekit-adapter:node
+    insteon-adapter:node
+    lg-tv-adapter:node
+    max-adapter:node
+    medisana-ks250-adapter:node
+    microblocks-adapter:node
+    mi-flora-adapter:node
+    piface-adapter:node
+    rf433-adapter:node
+    ruuvitag-adapter:node
+    sensor-tag-adapter:node
+    serial-adapter:node
+    tradfri-adapter:node
+    x10-cm11-adapter:node
+    xiaomi-temperature-humidity-sensor-adapter:node
+    zigbee-adapter:node
+    zwave-adapter:node
   )
 fi
 
@@ -103,6 +104,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   case "${ADDON_ARCH}" in
 
     darwin-x64)
+      RPXC=
       SKIP_ADAPTERS+=(
         blinkt-adapter
         bmp280-adapter
@@ -114,11 +116,11 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-arm)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
       ;;
 
     linux-arm64)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${NODE_VERSION}"
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
         piface-adapter
@@ -127,6 +129,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
 
     linux-x64)
+      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
       SKIP_ADAPTERS+=(
         blinkt-adapter
         piface-adapter
@@ -139,8 +142,8 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
       ;;
   esac
 
-  if [[ ${NODE_VERSION} != 8 ]]; then
-    # rf433-adapter isn't dependent on a specific node version. rather, we
+  if [[ "${LANGUAGE_NAME}" == "node" && "${LANGUAGE_VERSION}" != "8" ]]; then
+    # rf433-adapter isn't dependent on a specific node version. Rather, we
     # build it with the addon-builder in order to cross-compile a single native
     # (non-node) dependency.
     SKIP_ADAPTERS+=(
@@ -149,24 +152,32 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
   fi
 
   for ADAPTER in ${ADAPTERS[@]}; do
-    if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${ADAPTER} " ]]; then
+    adapter=$(echo "$ADAPTER" | cut -d: -f1)
+    adapter_language=$(echo "$ADAPTER" | cut -d: -f2)
+
+    if [[ "$adapter_language" != "$LANGUAGE_NAME" ]]; then
+      continue
+    fi
+
+    if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${adapter} " ]]; then
       echo "====="
-      echo "===== Skipping ${ADAPTER} for ${ADDON_ARCH} ====="
+      echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
       echo "====="
     elif [ -n "$RPXC" ]; then
-      ${RPXC} bash -c "cd /build/${ADAPTER}; ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} '${PULL_REQUEST}'"
+      ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
     else
       here=$(pwd)
-      cd ${ADAPTER}
-      ../build-adapter.sh ${ADDON_ARCH} ${NODE_VERSION} ${PULL_REQUEST}
+      cd ${adapter}
+      ../build-adapter.sh ${ADDON_ARCH} ${PULL_REQUEST}
       cd "${here}"
     fi
   done
 done
 
-ls -l builder
-echo "Download links:"
-for FILE in builder/*.tgz; do
-  CHECKSUM=$(cat ${FILE}.sha256sum | cut -f 1 -d ' ')
-  echo "  https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/$(basename ${FILE}) ${CHECKSUM}"
-done
+if compgen -G "builder/*.tgz" >/dev/null; then
+  echo "Download links:"
+  for FILE in builder/*.tgz; do
+    CHECKSUM=$(cat ${FILE}.sha256sum | cut -f 1 -d ' ')
+    echo "  https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/$(basename ${FILE}) ${CHECKSUM}"
+  done
+fi

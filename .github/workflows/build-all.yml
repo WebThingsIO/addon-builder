@@ -17,16 +17,47 @@ jobs:
           ubuntu-latest,
           macos-latest,
         ]
-        node: [
-          '8',
-          '10',
-          '12',
+        pair: [
+          'node:8',
+          'node:10',
+          'node:12',
+          'python:3.5',
+          'python:3.6',
+          'python:3.7',
+          'python:3.8',
         ]
+        include:
+          - pair: 'node:8'
+            language: 'node'
+            version: '8'
+          - pair: 'node:10'
+            language: 'node'
+            version: '10'
+          - pair: 'node:12'
+            language: 'node'
+            version: '12'
+          - pair: 'python:3.5'
+            language: 'python'
+            version: '3.5'
+          - pair: 'python:3.6'
+            language: 'python'
+            version: '3.6'
+          - pair: 'python:3.7'
+            language: 'python'
+            version: '3.7'
+          - pair: 'python:3.8'
+            language: 'python'
+            version: '3.8'
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
+      if: ${{ matrix.language == 'node' && matrix.os == 'macos-latest' }}
       with:
-        node-version: ${{ matrix.node }}
+        node-version: ${{ matrix.version }}
+    - uses: actions/setup-python@v2
+      if: ${{ matrix.language == 'python' && matrix.os == 'macos-latest' }}
+      with:
+        python-version: ${{ matrix.version }}
     - name: Install dependencies
       run: |
         if [ ${{ matrix.os }} = macos-latest ]; then
@@ -34,16 +65,11 @@ jobs:
         else
           sudo apt -qq update
           sudo apt install --no-install-recommends -y \
-            autoconf \
-            automake \
             binfmt-support \
-            build-essential \
-            libudev-dev \
-            pkg-config \
             qemu \
             qemu-user-static
           docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         fi
     - name: Build adapters
       run: |
-        ./build-addons.sh
+        ./build-addons.sh "${{ matrix.language }}" "${{ matrix.version }}"

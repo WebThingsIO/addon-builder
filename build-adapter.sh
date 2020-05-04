@@ -10,13 +10,10 @@ set -e
 
 SCRIPT_NAME=$(basename $0)
 ADDON_ARCH="$1"
-
-NVM_VERSION="v0.35.2"
-NODE_VERSION="$2"
-PULL_REQUEST="$3"
+PULL_REQUEST="$2"
 
 if [ -z "${ADDON_ARCH}" ]; then
-  echo "Usage: ${SCRIPTNAME} addon-arch"
+  echo "Usage: ${SCRIPT_NAME} addon-arch"
   exit 1
 fi
 
@@ -79,7 +76,7 @@ fi
 
 # Build the addon dependencies
 umask 0
-npm config set cache /tmp/.npm
+which npm && npm config set cache /tmp/.npm
 ADDON_ARCH=${ADDON_ARCH} ./package.sh
 
 # Collect the results into a tarball.
