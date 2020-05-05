@@ -10,6 +10,15 @@ RUN apt update && \
         build-essential \
         curl \
         git \
+        libbz2-dev \
+        libc6-dev \
+        libffi-dev \
+        libgdbm-dev \
+        liblzma-dev \
+        libncurses5-dev \
+        libncursesw5-dev \
+        libreadline-dev \
+        libsqlite3-dev \
         libssl-dev \
         libudev-dev \
         openssl \
