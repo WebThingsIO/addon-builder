@@ -18,7 +18,7 @@ https://github.com/mozilla-iot/addon-builder/actions
 If you only want to build for one adapter, you can pass that adapter on
 the command line.
 ```
-./trigger-build.py --token <your-token> gpio-adapter
+./trigger-build.py --token <your-token> gpio-adapter:node
 ```
 
 # Deployed tarballs
