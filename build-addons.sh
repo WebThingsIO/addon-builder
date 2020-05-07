@@ -89,6 +89,7 @@ if [ -z "${ADAPTERS}" ]; then
     piface-adapter:node
     rf433-adapter:node
     ruuvitag-adapter:node
+    sense-hat-adapter:python
     sensor-tag-adapter:node
     serial-adapter:node
     tradfri-adapter:node
