@@ -114,6 +114,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         gpio-adapter
         piface-adapter
         rf433-adapter
+        sense-hat-adapter
       )
       ;;
 
@@ -127,6 +128,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         blinkt-adapter
         piface-adapter
         rf433-adapter
+        sense-hat-adapter
       )
       ;;
 
@@ -136,6 +138,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         blinkt-adapter
         piface-adapter
         rf433-adapter
+        sense-hat-adapter
       )
       ;;
 
