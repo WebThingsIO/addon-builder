@@ -22,6 +22,11 @@ jobs:
           'python:3.7.7',
           'python:3.8.2',
         ]
+        platform: [
+          'linux-arm',
+          'linux-arm64',
+          'linux-x64',
+        ]
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -36,14 +41,13 @@ jobs:
           language=$(echo ${{ matrix.language }} | cut -d: -f1)
           version=$(echo ${{ matrix.language }} | cut -d: -f2)
           short_version=$(echo $version | cut -d. -f 1-2)
-          for toolchain in toolchain/*; do
-            image=$(echo "$toolchain" | sed 's/\//-/g')
-            image=${image}-${language}-${short_version}
-            if [ $language = node ]; then
-              docker build --build-arg NODE_VERSION=${version} -t ${image} ${toolchain}/${language}
-            else
-              docker build --build-arg PYTHON_VERSION=${version} -t ${image} ${toolchain}/${language}
-            fi
-            docker tag ${image} mozillaiot/${image}:latest
-            docker push mozillaiot/${image}:latest
-          done
+          toolchain="toolchain/${{ matrix.platform }}"
+          image=$(echo "$toolchain" | sed 's/\//-/g')
+          image=${image}-${language}-${short_version}
+          if [ $language = node ]; then
+            docker build --build-arg NODE_VERSION=${version} -t ${image} ${toolchain}/${language}
+          else
+            docker build --build-arg PYTHON_VERSION=${version} -t ${image} ${toolchain}/${language}
+          fi
+          docker tag ${image} mozillaiot/${image}:latest
+          docker push mozillaiot/${image}:latest
