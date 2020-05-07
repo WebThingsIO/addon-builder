@@ -89,6 +89,7 @@ if [ -z "${ADAPTERS}" ]; then
     piface-adapter:node
     rf433-adapter:node
     ruuvitag-adapter:node
+    sense-hat-adapter:python
     sensor-tag-adapter:node
     serial-adapter:node
     tradfri-adapter:node
@@ -113,6 +114,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         gpio-adapter
         piface-adapter
         rf433-adapter
+        sense-hat-adapter
       )
       ;;
 
@@ -126,6 +128,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         blinkt-adapter
         piface-adapter
         rf433-adapter
+        sense-hat-adapter
       )
       ;;
 
@@ -135,6 +138,7 @@ for ADDON_ARCH in ${ADDON_ARCHS}; do
         blinkt-adapter
         piface-adapter
         rf433-adapter
+        sense-hat-adapter
       )
       ;;
 

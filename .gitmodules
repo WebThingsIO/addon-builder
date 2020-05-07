@@ -71,3 +71,6 @@
 [submodule "eufy-adapter"]
 	path = eufy-adapter
 	url = https://github.com/mozilla-iot/eufy-adapter
+[submodule "sense-hat-adapter"]
+	path = sense-hat-adapter
+	url = https://github.com/rzr/sense-hat-webthing
