@@ -7,44 +7,17 @@ if [[ "${ADAPTERS}" =~ " " ]]; then
   ADAPTERS=(${ADAPTERS})
 fi
 
-LANGUAGE_NAME=$1
-LANGUAGE_VERSION=$2
+ADDON_ARCH="$1"
+LANGUAGE_NAME="$2"
+LANGUAGE_VERSION="$3"
 
-case "$(uname -s)" in
-  Linux)
-    OS_NAME=linux
-    ;;
-
-  Darwin)
-    OS_NAME=osx
-    ;;
-
-  *)
-    echo "Unrecognized uname -s: $(uname -s)"
-    exit 1
-    ;;
-esac
-
-case "${OS_NAME}" in
-  linux)
-    ADDON_ARCHS="linux-x64 linux-arm linux-arm64"
-    ;;
-
-  osx)
-    ADDON_ARCHS="darwin-x64"
-    tar() {
-      gtar "$@"
-      return $!
-    }
-    export -f tar
-    ;;
-
-  *)
-    echo "Unsupported OS_NAME = ${OS_NAME}"
-    exit 1
-    ;;
-
-esac
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  tar() {
+    gtar "$@"
+    return $!
+  }
+  export -f tar
+fi
 
 if [ -n "${PULL_REQUEST}" ]; then
   if [ "${#ADAPTERS[@]}" != 1 ]; then
@@ -100,83 +73,81 @@ if [ -z "${ADAPTERS}" ]; then
   )
 fi
 
-for ADDON_ARCH in ${ADDON_ARCHS}; do
-  SKIP_ADAPTERS=()
+SKIP_ADAPTERS=()
 
-  case "${ADDON_ARCH}" in
+case "${ADDON_ARCH}" in
 
-    darwin-x64)
-      RPXC=
-      SKIP_ADAPTERS+=(
-        blinkt-adapter
-        bmp280-adapter
-        generic-sensors-adapter
-        gpio-adapter
-        piface-adapter
-        rf433-adapter
-        sense-hat-adapter
-      )
-      ;;
-
-    linux-arm)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
-      ;;
-
-    linux-arm64)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
-      SKIP_ADAPTERS+=(
-        blinkt-adapter
-        piface-adapter
-        rf433-adapter
-        sense-hat-adapter
-      )
-      ;;
-
-    linux-x64)
-      RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
-      SKIP_ADAPTERS+=(
-        blinkt-adapter
-        piface-adapter
-        rf433-adapter
-        sense-hat-adapter
-      )
-      ;;
-
-    *)
-      RPXC=
-      ;;
-  esac
-
-  if [[ "${LANGUAGE_NAME}" == "node" && "${LANGUAGE_VERSION}" != "8" ]]; then
-    # rf433-adapter isn't dependent on a specific node version. Rather, we
-    # build it with the addon-builder in order to cross-compile a single native
-    # (non-node) dependency.
+  darwin-x64)
+    RPXC=
     SKIP_ADAPTERS+=(
+      blinkt-adapter
+      bmp280-adapter
+      generic-sensors-adapter
+      gpio-adapter
+      piface-adapter
       rf433-adapter
+      sense-hat-adapter
     )
+    ;;
+
+  linux-arm)
+    RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
+    ;;
+
+  linux-arm64)
+    RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
+    SKIP_ADAPTERS+=(
+      blinkt-adapter
+      piface-adapter
+      rf433-adapter
+      sense-hat-adapter
+    )
+    ;;
+
+  linux-x64)
+    RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
+    SKIP_ADAPTERS+=(
+      blinkt-adapter
+      piface-adapter
+      rf433-adapter
+      sense-hat-adapter
+    )
+    ;;
+
+  *)
+    RPXC=
+    ;;
+esac
+
+if [[ "${LANGUAGE_NAME}" == "node" && "${LANGUAGE_VERSION}" != "8" ]]; then
+  # rf433-adapter isn't dependent on a specific node version. Rather, we
+  # build it with the addon-builder in order to cross-compile a single native
+  # (non-node) dependency.
+  SKIP_ADAPTERS+=(
+    rf433-adapter
+  )
+fi
+
+for ADAPTER in ${ADAPTERS[@]}; do
+  adapter=$(echo "$ADAPTER" | cut -d: -f1)
+  adapter_language=$(echo "$ADAPTER" | cut -d: -f2)
+
+  if [[ "$adapter_language" != "$LANGUAGE_NAME" ]]; then
+    continue
   fi
 
-  for ADAPTER in ${ADAPTERS[@]}; do
-    adapter=$(echo "$ADAPTER" | cut -d: -f1)
-    adapter_language=$(echo "$ADAPTER" | cut -d: -f2)
-
-    if [[ "$adapter_language" != "$LANGUAGE_NAME" ]]; then
-      continue
-    fi
-
-    if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${adapter} " ]]; then
-      echo "====="
-      echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
-      echo "====="
-    elif [ -n "$RPXC" ]; then
-      ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
-    else
-      here=$(pwd)
-      cd ${adapter}
-      ../build-adapter.sh ${ADDON_ARCH} ${PULL_REQUEST}
-      cd "${here}"
-    fi
-  done
+  if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${adapter} " ]]; then
+    echo "====="
+    echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
+    echo "====="
+  elif [ -n "$RPXC" ]; then
+    ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
+  else
+    here=$(pwd)
+    cd ${adapter}
+    ../build-adapter.sh ${ADDON_ARCH} ${PULL_REQUEST}
+    cd "${here}"
+  fi
 done
 
 if compgen -G "builder/*.tgz" >/dev/null; then
