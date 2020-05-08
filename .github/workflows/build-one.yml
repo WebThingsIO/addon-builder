@@ -6,12 +6,13 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [
-          ubuntu-latest,
-          macos-latest,
+        platform: [
+          'linux-arm',
+          'linux-arm64',
+          'linux-x64',
+          'darwin-x64',
         ]
         pair: [
           'node:8',
@@ -23,6 +24,14 @@ jobs:
           'python:3.8',
         ]
         include:
+          - platform: 'linux-arm'
+            host-os: 'ubuntu-latest'
+          - platform: 'linux-arm64'
+            host-os: 'ubuntu-latest'
+          - platform: 'linux-x64'
+            host-os: 'ubuntu-latest'
+          - platform: 'darwin-x64'
+            host-os: 'macos-latest'
           - pair: 'node:8'
             language: 'node'
             version: '8'
@@ -44,21 +53,22 @@ jobs:
           - pair: 'python:3.8'
             language: 'python'
             version: '3.8'
+    runs-on: ${{ matrix.host-os }}
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
-      if: ${{ matrix.language == 'node' && matrix.os == 'macos-latest' }}
+      if: ${{ matrix.language == 'node' && matrix.host-os == 'macos-latest' }}
       with:
         node-version: ${{ matrix.version }}
     - uses: actions/setup-python@v2
-      if: ${{ matrix.language == 'python' && matrix.os == 'macos-latest' }}
+      if: ${{ matrix.language == 'python' && matrix.host-os == 'macos-latest' }}
       with:
         python-version: ${{ matrix.version }}
     - name: Install dependencies
       run: |
-        if [ ${{ matrix.os }} = macos-latest ]; then
+        if [[ "${{ matrix.host-os }}" == "macos-latest" ]]; then
           brew install coreutils gnu-tar pkg-config
-        else
+        elif [[ "${{ matrix.platform }}" != "linux-x64" ]]; then
           sudo apt -qq update
           sudo apt install --no-install-recommends -y \
             binfmt-support \
@@ -72,7 +82,7 @@ jobs:
       env:
         ADAPTERS: ${{ github.event.client_payload.adapter }}
       run: |
-        ./build-addons.sh "${{ matrix.language }}" "${{ matrix.version }}"
+        ./build-addons.sh "${{ matrix.platform }}" "${{ matrix.language }}" "${{ matrix.version }}"
     - name: Upload to S3
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
