@@ -36,4 +36,5 @@ RUN apt update && \
     make && \
     make install && \
     cd .. && \
-    rm -rf "Python-${PYTHON_VERSION}"
+    rm -rf "Python-${PYTHON_VERSION}" && \
+    python3 -m pip install --upgrade pip
