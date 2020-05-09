@@ -68,6 +68,9 @@ jobs:
       run: |
         if [[ "${{ matrix.host-os }}" == "macos-latest" ]]; then
           brew install coreutils gnu-tar pkg-config
+          if [[ "${{ matrix.language }}" == "python" ]]; then
+            python3 -m pip install --upgrade pip setuptools wheel
+          fi
         elif [[ "${{ matrix.platform }}" != "linux-x64" ]]; then
           sudo apt -qq update
           sudo apt install --no-install-recommends -y \
