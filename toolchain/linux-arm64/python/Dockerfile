@@ -37,4 +37,4 @@ RUN apt update && \
     make install && \
     cd .. && \
     rm -rf "Python-${PYTHON_VERSION}" && \
-    python3 -m pip install --upgrade pip
+    python3 -m pip install --upgrade pip setuptools wheel
