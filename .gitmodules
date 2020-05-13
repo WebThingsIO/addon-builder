@@ -74,3 +74,6 @@
 [submodule "sense-hat-adapter"]
 	path = sense-hat-adapter
 	url = https://github.com/rzr/sense-hat-webthing
+[submodule "kafka-bridge"]
+	path = kafka-bridge
+	url = https://github.com/tim-hellhake/kafka-bridge

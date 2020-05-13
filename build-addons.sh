@@ -54,6 +54,7 @@ if [ -z "${ADAPTERS}" ]; then
     gpio-adapter:node
     homekit-adapter:node
     insteon-adapter:node
+    kafka-bridge:node
     lg-tv-adapter:node
     max-adapter:node
     medisana-ks250-adapter:node
