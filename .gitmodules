@@ -77,3 +77,6 @@
 [submodule "kafka-bridge"]
 	path = kafka-bridge
 	url = https://github.com/tim-hellhake/kafka-bridge
+[submodule "influxdb-bridge"]
+	path = influxdb-bridge
+	url = https://github.com/tim-hellhake/influxdb-bridge
