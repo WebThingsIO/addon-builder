@@ -83,6 +83,7 @@ case "${ADDON_ARCH}" in
   darwin-x64)
     RPXC=
     SKIP_ADAPTERS+=(
+      awox-mesh-light-adapter
       blinkt-adapter
       bmp280-adapter
       generic-sensors-adapter
