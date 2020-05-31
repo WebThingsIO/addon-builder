@@ -13,6 +13,7 @@ RUN apt update && \
         libbz2-dev \
         libc6-dev \
         libffi-dev \
+        libglib2.0-dev \
         libgdbm-dev \
         libjpeg-dev \
         liblzma-dev \

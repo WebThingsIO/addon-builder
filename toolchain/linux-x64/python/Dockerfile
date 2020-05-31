@@ -14,6 +14,7 @@ RUN apt update && \
         libc6-dev \
         libffi-dev \
         libgdbm-dev \
+        libglib2.0-dev \
         libjpeg-dev \
         liblzma-dev \
         libncurses5-dev \
