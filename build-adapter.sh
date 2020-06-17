@@ -32,26 +32,26 @@ if [ -f .nvmrc ]; then
   rm -f .nvmrc
 fi
 
+# Load nvm
 if [ -d "${HOME}/.nvm" ]; then
   export NVM_DIR="${HOME}/.nvm"
-  [ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"  # This loads nvm
+  [ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"
 fi
 
+# Clean up any Node modules left behind
 if [ -f "package.json" ]; then
   rm -rf node_modules
 fi
 
+# For zwave, we need to build patchelf and OpenZWave
 if [ "${ADAPTER}" == "zwave-adapter" ]; then
   if [[ "${ADDON_ARCH}" =~ "linux" ]]; then
-    # Install patchelf, which is used by zwave's package.sh
     rm -rf patchelf
     git clone https://github.com/NixOS/patchelf
     (cd patchelf && ./bootstrap.sh && ./configure && make && sudo make install)
   fi
 
-  # Build and install the OpenZWave library.
-  # We use our own fork of openzwave so that we can apply some patches which are
-  # OpenWRT specific.
+  # We use our own fork of openzwave so that we can apply some patches.
   OPEN_ZWAVE="open-zwave"
   OZW_FLAGS=
   OZW_BRANCH=moziot
@@ -59,19 +59,6 @@ if [ "${ADAPTER}" == "zwave-adapter" ]; then
   git clone -b ${OZW_BRANCH} --single-branch --depth=1 https://github.com/mozilla-iot/open-zwave ${OPEN_ZWAVE}
   CFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0" make -C ${OPEN_ZWAVE} ${OZW_FLAGS}
   sudo make -C ${OPEN_ZWAVE} ${OZW_FLAGS} install
-fi
-
-if [ "${ADAPTER}" == "rf433-adapter" ]; then
-  WIRING_PI="WiringPi"
-  rm -rf ${WIRING_PI}
-  git clone https://github.com/WiringPi/WiringPi
-  cd ${WIRING_PI}
-  ./build
-  cd ..
-
-  export CPATH=/usr/local/include
-  export LIBRARY_PATH=/usr/local/lib
-  export LD_LIBRARY_PATH=/usr/local/lib
 fi
 
 # Build the addon dependencies
