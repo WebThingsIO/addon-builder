@@ -17,6 +17,12 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     return $!
   }
   export -f tar
+
+  readlink() {
+    greadlink "$@"
+    return $!
+  }
+  export -f readlink
 fi
 
 if [ -n "${PULL_REQUEST}" ]; then
