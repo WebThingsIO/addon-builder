@@ -71,7 +71,7 @@ jobs:
     - name: Install dependencies
       run: |
         if [[ "${{ matrix.host-os }}" == "macos-latest" ]]; then
-          brew install boost cmake coreutils eigen gnu-tar pkg-config
+          brew install boost cmake coreutils eigen findutils gnu-tar pkg-config
           if [[ "${{ matrix.language }}" == "python" ]]; then
             python3 -m pip install --upgrade pip setuptools wheel
           fi

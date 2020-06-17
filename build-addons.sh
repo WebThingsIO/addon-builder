@@ -23,6 +23,12 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     return $!
   }
   export -f readlink
+
+  find() {
+    gfind "$@"
+    return $!
+  }
+  export -f find
 fi
 
 if [ -n "${PULL_REQUEST}" ]; then
