@@ -81,7 +81,6 @@ if [ -z "${ADAPTERS}" ]; then
     sensor-tag-adapter:node
     serial-adapter:node
     tradfri-adapter:node
-    voice-addon:node
     x10-cm11-adapter:node
     xiaomi-temperature-humidity-sensor-adapter:node
     zigbee-adapter:node
