@@ -83,6 +83,3 @@
 [submodule "awox-mesh-light-adapter"]
 	path = awox-mesh-light-adapter
 	url = https://github.com/rzr/awox-mesh-light-webthing
-[submodule "voice-addon"]
-	path = voice-addon
-	url = https://github.com/mozilla-iot/voice-addon
