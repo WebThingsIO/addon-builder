@@ -75,7 +75,6 @@ if [ -z "${ADAPTERS}" ]; then
     microblocks-adapter:node
     mi-flora-adapter:node
     piface-adapter:node
-    rf433-adapter:node
     ruuvitag-adapter:node
     sense-hat-adapter:python
     sensor-tag-adapter:node
@@ -102,7 +101,6 @@ case "${ADDON_ARCH}" in
       generic-sensors-adapter
       gpio-adapter
       piface-adapter
-      rf433-adapter
       sense-hat-adapter
     )
     ;;
@@ -116,7 +114,6 @@ case "${ADDON_ARCH}" in
     SKIP_ADAPTERS+=(
       blinkt-adapter
       piface-adapter
-      rf433-adapter
       sense-hat-adapter
     )
     ;;
@@ -126,7 +123,6 @@ case "${ADDON_ARCH}" in
     SKIP_ADAPTERS+=(
       blinkt-adapter
       piface-adapter
-      rf433-adapter
       sense-hat-adapter
     )
     ;;
@@ -135,15 +131,6 @@ case "${ADDON_ARCH}" in
     RPXC=
     ;;
 esac
-
-if [[ "${LANGUAGE_NAME}" == "node" && "${LANGUAGE_VERSION}" != "8" ]]; then
-  # rf433-adapter isn't dependent on a specific node version. Rather, we
-  # build it with the addon-builder in order to cross-compile a single native
-  # (non-node) dependency.
-  SKIP_ADAPTERS+=(
-    rf433-adapter
-  )
-fi
 
 for ADAPTER in ${ADAPTERS[@]}; do
   adapter=$(echo "$ADAPTER" | cut -d: -f1)
