@@ -1,6 +1,7 @@
 # .gitignore
+**/tmp/
+*.swp
+*~
 addons/
 bin/
 builder/
-*~
-**/tmp/

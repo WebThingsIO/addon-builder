@@ -34,5 +34,6 @@ RUN curl https://apt.matrix.one/doc/apt-key.gpg | apt-key add - && \
         nvm install ${NODE_VERSION} && \
         nvm use ${NODE_VERSION} && \
         npm config -g set unsafe-perm true && \
+        npm config -g set cache /tmp/.npm && \
         nvm install-latest-npm && \
         nvm cache clear"
