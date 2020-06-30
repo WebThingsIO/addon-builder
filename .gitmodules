@@ -35,9 +35,6 @@
 [submodule "medisana-ks250-adapter"]
 	path = medisana-ks250-adapter
 	url = https://github.com/tim-hellhake/medisana-ks250-adapter
-[submodule "ruuvitag-adapter"]
-	path = ruuvitag-adapter
-	url = https://github.com/tim-hellhake/ruuvitag-adapter
 [submodule "xiaomi-temperature-humidity-sensor-adapter"]
 	path = xiaomi-temperature-humidity-sensor-adapter
 	url = https://github.com/tim-hellhake/xiaomi-temperature-humidity-sensor-adapter
