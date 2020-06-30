@@ -1,14 +1,15 @@
 #!/bin/bash -e
 
+ADDON_ARCH="$1"
+LANGUAGE_NAME="$2"
+LANGUAGE_VERSION="$3"
+
 # Ensure that ADAPTERS is an array.
 if [[ "${ADAPTERS}" =~ " " ]]; then
   ADAPTERS=(${ADAPTERS})
 fi
 
-ADDON_ARCH="$1"
-LANGUAGE_NAME="$2"
-LANGUAGE_VERSION="$3"
-
+# Set up GNU utils as defaults on Darwin
 if [[ "$(uname -s)" == "Darwin" ]]; then
   tar() {
     gtar "$@"
@@ -29,13 +30,15 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   export -f find
 fi
 
+# Pull latest versions of all submodules
 git submodule update --init --remote
 git submodule status
 
+# Create the output directory
 mkdir -p builder
 
+# If no adapters were provided via the environment, build them all
 if [ -z "${ADAPTERS}" ]; then
-  # No adapters were provided via the environment, build them all
   ADAPTERS=(
     awox-mesh-light-adapter:python
     blinkt-adapter:node
@@ -69,6 +72,7 @@ fi
 
 SKIP_ADAPTERS=()
 
+# Set up architecture overrides
 case "${ADDON_ARCH}" in
   darwin-x64)
     RPXC=
@@ -110,6 +114,7 @@ case "${ADDON_ARCH}" in
     ;;
 esac
 
+# Build the adapter(s)
 for ADAPTER in ${ADAPTERS[@]}; do
   adapter=$(echo "$ADAPTER" | cut -d: -f1)
   adapter_language=$(echo "$ADAPTER" | cut -d: -f2)
@@ -125,17 +130,18 @@ for ADAPTER in ${ADAPTERS[@]}; do
   elif [ -n "$RPXC" ]; then
     ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH}"
   else
-    here=$(pwd)
-    cd ${adapter}
+    pushd ${adapter}
     ../build-adapter.sh ${ADDON_ARCH}
-    cd "${here}"
+    popd
   fi
 done
 
+# Report on the generated tarballs
 if compgen -G "builder/*.tgz" >/dev/null; then
   echo "Download links:"
   for FILE in builder/*.tgz; do
     CHECKSUM=$(cat ${FILE}.sha256sum | cut -f 1 -d ' ')
-    echo "  https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/$(basename ${FILE}) ${CHECKSUM}"
+    FNAME=$(basename ${FILE})
+    echo "  https://s3-us-west-2.amazonaws.com/mozilla-gateway-addons/builder/${FNAME} ${CHECKSUM}"
   done
 fi
