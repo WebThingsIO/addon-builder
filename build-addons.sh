@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -e
+#!/bin/bash -e
 
 # Ensure that ADAPTERS is an array.
 if [[ "${ADAPTERS}" =~ " " ]]; then
@@ -31,27 +29,8 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   export -f find
 fi
 
-if [ -n "${PULL_REQUEST}" ]; then
-  if [ "${#ADAPTERS[@]}" != 1 ]; then
-    echo "Must specify exactly one adapter when using pull request option."
-    exit 1
-  fi
-  if ! [[ "${PULL_REQUEST}" =~ ^[0-9]+$ ]]; then
-    echo "Expecting numeric pull request; Got '${PULL_REQUEST}'"
-    exit 1
-  fi
-fi
-
 git submodule update --init --remote
 git submodule status
-
-if [ -n "${PULL_REQUEST}" ]; then
-  (
-    cd ${ADAPTERS}
-    git fetch -fu origin pull/${PULL_REQUEST}/head:pr/origin/${PULL_REQUEST}
-    git checkout pr/origin/${PULL_REQUEST}
-  )
-fi
 
 mkdir -p builder
 
@@ -91,7 +70,6 @@ fi
 SKIP_ADAPTERS=()
 
 case "${ADDON_ARCH}" in
-
   darwin-x64)
     RPXC=
     SKIP_ADAPTERS+=(
@@ -145,11 +123,11 @@ for ADAPTER in ${ADAPTERS[@]}; do
     echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
     echo "====="
   elif [ -n "$RPXC" ]; then
-    ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH} '${PULL_REQUEST}'"
+    ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH}"
   else
     here=$(pwd)
     cd ${adapter}
-    ../build-adapter.sh ${ADDON_ARCH} ${PULL_REQUEST}
+    ../build-adapter.sh ${ADDON_ARCH}
     cd "${here}"
   fi
 done
