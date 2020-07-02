@@ -43,6 +43,7 @@ if [ -z "${ADAPTERS}" ]; then
     awox-mesh-light-adapter:python
     blinkt-adapter:node
     bmp280-adapter:node
+    Candle-manager-addon:python
     enocean-adapter:node
     eufy-adapter:python
     generic-sensors-adapter:node
@@ -56,6 +57,7 @@ if [ -z "${ADAPTERS}" ]; then
     medisana-ks250-adapter:node
     microblocks-adapter:node
     mi-flora-adapter:node
+    mysensors-adapter:python
     piface-adapter:node
     sense-hat-adapter:python
     sensor-tag-adapter:node

@@ -80,3 +80,9 @@
 [submodule "voice-addon"]
 	path = voice-addon
 	url = https://github.com/mozilla-iot/voice-addon
+[submodule "Candle-manager-addon"]
+	path = Candle-manager-addon
+	url = https://github.com/createcandle/Candle-manager-addon
+[submodule "mysensors-adapter"]
+	path = mysensors-adapter
+	url = https://github.com/createcandle/Webthings-mysensors-adapter
