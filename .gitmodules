@@ -50,9 +50,6 @@
 [submodule "insteon-adapter"]
 	path = insteon-adapter
 	url = https://github.com/snorp/insteon-adapter
-[submodule "tradfri-adapter"]
-	path = tradfri-adapter
-	url = https://github.com/tim-hellhake/tradfri-adapter
 [submodule "x10-cm11-adapter"]
 	path = x10-cm11-adapter
 	url = https://github.com/AlanDThiessen/x10-cm11-adapter
