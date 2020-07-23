@@ -58,6 +58,7 @@ if [ -z "${ADAPTERS}" ]; then
     microblocks-adapter:node
     mi-flora-adapter:node
     mysensors-adapter:python
+    p1-adapter:python
     piface-adapter:node
     sense-hat-adapter:python
     sensor-tag-adapter:node

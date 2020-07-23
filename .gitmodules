@@ -83,3 +83,6 @@
 [submodule "mysensors-adapter"]
 	path = mysensors-adapter
 	url = https://github.com/createcandle/Webthings-mysensors-adapter
+[submodule "p1-adapter"]
+	path = p1-adapter
+	url = https://github.com/createcandle/p1-adapter
