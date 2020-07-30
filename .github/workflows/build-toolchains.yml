@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    if: ${{ startsWith(github.repository, 'mozilla-iot/') }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
