@@ -49,7 +49,6 @@ if [ -z "${ADAPTERS}" ]; then
     generic-sensors-adapter:node
     gpio-adapter:node
     homekit-adapter:node
-    influxdb-bridge:node
     insteon-adapter:node
     kafka-bridge:node
     lg-tv-adapter:node
