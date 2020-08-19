@@ -23,9 +23,6 @@
 [submodule "lg-tv-adapter"]
 	path = lg-tv-adapter
 	url = https://github.com/mozilla-iot/lg-tv-adapter
-[submodule "enocean-adapter"]
-	path = enocean-adapter
-	url = https://github.com/tim-hellhake/enocean-adapter
 [submodule "mi-flora-adapter"]
 	path = mi-flora-adapter
 	url = https://github.com/tim-hellhake/mi-flora-adapter
