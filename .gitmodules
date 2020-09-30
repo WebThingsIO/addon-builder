@@ -56,9 +56,6 @@
 [submodule "piface-adapter"]
 	path = piface-adapter
 	url = https://github.com/tim-hellhake/piface-adapter
-[submodule "eufy-adapter"]
-	path = eufy-adapter
-	url = https://github.com/WebThingsIO/eufy-adapter
 [submodule "sense-hat-adapter"]
 	path = sense-hat-adapter
 	url = https://github.com/rzr/sense-hat-webthing
