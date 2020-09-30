@@ -53,8 +53,8 @@ for lang in ${languages[@]}; do
       docker build --build-arg PYTHON_VERSION=${version} -t ${image} ${toolchain}/${language}
     fi
 
-    docker tag ${image} mozillaiot/${image}:latest
-    docker push mozillaiot/${image}:latest
+    docker tag ${image} webthingsio/${image}:latest
+    docker push webthingsio/${image}:latest
 
     echo
   done

@@ -1,6 +1,6 @@
 # Add-on builder
 
-Add-on builder for the Mozilla WebThings Gateway.
+Add-on builder for the WebThings Gateway.
 
 This repository will build addons for macOS, Linux, and Raspberry Pi variants
 of the gateway.
@@ -13,7 +13,7 @@ trigger a build of all of the adapters.
 
 The `trigger-build.py` will trigger a GitHub workflow to start
 building an image. You can check the progress by watching
-https://github.com/mozilla-iot/addon-builder/actions
+https://github.com/WebThingsIO/addon-builder/actions
 
 If you only want to build for one adapter, you can pass that adapter on
 the command line.

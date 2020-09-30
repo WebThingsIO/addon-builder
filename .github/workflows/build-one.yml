@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    if: ${{ startsWith(github.repository, 'mozilla-iot/') }}
+    if: ${{ startsWith(github.repository, 'WebThingsIO/') }}
     strategy:
       matrix:
         platform: [

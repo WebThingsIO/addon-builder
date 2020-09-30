@@ -1,28 +1,28 @@
 [submodule "gpio-adapter"]
 	path = gpio-adapter
-	url = https://github.com/mozilla-iot/gpio-adapter
+	url = https://github.com/WebThingsIO/gpio-adapter
 	branch = master
 [submodule "serial-adapter"]
 	path = serial-adapter
-	url = https://github.com/mozilla-iot/serial-adapter
+	url = https://github.com/WebThingsIO/serial-adapter
 	branch = master
 [submodule "zigbee-adapter"]
 	path = zigbee-adapter
-	url = https://github.com/mozilla-iot/zigbee-adapter
+	url = https://github.com/WebThingsIO/zigbee-adapter
 	branch = master
 [submodule "zwave-adapter"]
 	path = zwave-adapter
-	url = https://github.com/mozilla-iot/zwave-adapter
+	url = https://github.com/WebThingsIO/zwave-adapter
 	branch = master
 [submodule "microblocks-adapter"]
 	path = microblocks-adapter
 	url = https://github.com/bromagosa/microblocks-adapter
 [submodule "homekit-adapter"]
 	path = homekit-adapter
-	url = https://github.com/mozilla-iot/homekit-adapter
+	url = https://github.com/WebThingsIO/homekit-adapter
 [submodule "lg-tv-adapter"]
 	path = lg-tv-adapter
-	url = https://github.com/mozilla-iot/lg-tv-adapter
+	url = https://github.com/WebThingsIO/lg-tv-adapter
 [submodule "mi-flora-adapter"]
 	path = mi-flora-adapter
 	url = https://github.com/tim-hellhake/mi-flora-adapter
@@ -58,7 +58,7 @@
 	url = https://github.com/tim-hellhake/piface-adapter
 [submodule "eufy-adapter"]
 	path = eufy-adapter
-	url = https://github.com/mozilla-iot/eufy-adapter
+	url = https://github.com/WebThingsIO/eufy-adapter
 [submodule "sense-hat-adapter"]
 	path = sense-hat-adapter
 	url = https://github.com/rzr/sense-hat-webthing
@@ -67,7 +67,7 @@
 	url = https://github.com/rzr/awox-mesh-light-webthing
 [submodule "voice-addon"]
 	path = voice-addon
-	url = https://github.com/mozilla-iot/voice-addon
+	url = https://github.com/WebThingsIO/voice-addon
 [submodule "Candle-manager-addon"]
 	path = Candle-manager-addon
 	url = https://github.com/createcandle/Candle-manager-addon

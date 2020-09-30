@@ -4,7 +4,7 @@ import argparse
 import requests
 import sys
 
-BASE_URL = 'https://api.github.com/repos/mozilla-iot/addon-builder/dispatches'
+BASE_URL = 'https://api.github.com/repos/WebThingsIO/addon-builder/dispatches'
 
 
 def main(token, adapter):

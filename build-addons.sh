@@ -86,11 +86,11 @@ case "${ADDON_ARCH}" in
     ;;
 
   linux-arm)
-    RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
+    RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     ;;
 
   linux-arm64)
-    RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
+    RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     SKIP_ADAPTERS+=(
       blinkt-adapter
       piface-adapter
@@ -99,7 +99,7 @@ case "${ADDON_ARCH}" in
     ;;
 
   linux-x64)
-    RPXC="docker run --rm -t -v $PWD:/build mozillaiot/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
+    RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     SKIP_ADAPTERS+=(
       blinkt-adapter
       piface-adapter

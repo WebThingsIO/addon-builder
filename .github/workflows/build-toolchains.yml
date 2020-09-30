@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    if: ${{ startsWith(github.repository, 'mozilla-iot/') }}
+    if: ${{ startsWith(github.repository, 'WebThingsIO/') }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -53,5 +53,5 @@ jobs:
           else
             docker build --build-arg PYTHON_VERSION=${version} -t ${image} ${toolchain}/${language}
           fi
-          docker tag ${image} mozillaiot/${image}:latest
-          docker push mozillaiot/${image}:latest
+          docker tag ${image} webthingsio/${image}:latest
+          docker push webthingsio/${image}:latest
