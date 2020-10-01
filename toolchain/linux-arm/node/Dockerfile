@@ -28,7 +28,7 @@ RUN curl https://apt.matrix.one/doc/apt-key.gpg | apt-key add - && \
         zlib1g-dev && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash && \
     bash -c "export NVM_DIR=\${HOME}/.nvm && \
         source \${NVM_DIR}/nvm.sh && \
         nvm install ${NODE_VERSION} && \
