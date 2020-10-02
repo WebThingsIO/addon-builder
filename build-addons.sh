@@ -54,7 +54,6 @@ if [ -z "${ADAPTERS}" ]; then
     p1-adapter:python
     sense-hat-adapter:python
     sensor-tag-adapter:node
-    voice-addon:node
     x10-cm11-adapter:node
     xiaomi-temperature-humidity-sensor-adapter:node
     zigbee-adapter:node
