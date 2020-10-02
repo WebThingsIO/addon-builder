@@ -1,11 +1,3 @@
-[submodule "zigbee-adapter"]
-	path = zigbee-adapter
-	url = https://github.com/WebThingsIO/zigbee-adapter
-	branch = master
-[submodule "zwave-adapter"]
-	path = zwave-adapter
-	url = https://github.com/WebThingsIO/zwave-adapter
-	branch = master
 [submodule "microblocks-adapter"]
 	path = microblocks-adapter
 	url = https://github.com/bromagosa/microblocks-adapter

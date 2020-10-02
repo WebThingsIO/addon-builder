@@ -56,8 +56,6 @@ if [ -z "${ADAPTERS}" ]; then
     sensor-tag-adapter:node
     x10-cm11-adapter:node
     xiaomi-temperature-humidity-sensor-adapter:node
-    zigbee-adapter:node
-    zwave-adapter:node
   )
 fi
 
