@@ -55,7 +55,6 @@ if [ -z "${ADAPTERS}" ]; then
     mi-flora-adapter:node
     mysensors-adapter:python
     p1-adapter:python
-    piface-adapter:node
     sense-hat-adapter:python
     sensor-tag-adapter:node
     serial-adapter:node
@@ -79,7 +78,6 @@ case "${ADDON_ARCH}" in
       bmp280-adapter
       generic-sensors-adapter
       gpio-adapter
-      piface-adapter
       sense-hat-adapter
     )
     ;;
@@ -92,7 +90,6 @@ case "${ADDON_ARCH}" in
     RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     SKIP_ADAPTERS+=(
       blinkt-adapter
-      piface-adapter
       sense-hat-adapter
     )
     ;;
@@ -101,7 +98,6 @@ case "${ADDON_ARCH}" in
     RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     SKIP_ADAPTERS+=(
       blinkt-adapter
-      piface-adapter
       sense-hat-adapter
     )
     ;;

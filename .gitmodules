@@ -53,9 +53,6 @@
 [submodule "generic-sensors-adapter"]
 	path = generic-sensors-adapter
 	url = https://github.com/rzr/mozilla-iot-generic-sensors-adapter
-[submodule "piface-adapter"]
-	path = piface-adapter
-	url = https://github.com/tim-hellhake/piface-adapter
 [submodule "sense-hat-adapter"]
 	path = sense-hat-adapter
 	url = https://github.com/rzr/sense-hat-webthing
