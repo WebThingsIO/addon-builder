@@ -1,7 +1,3 @@
-[submodule "serial-adapter"]
-	path = serial-adapter
-	url = https://github.com/WebThingsIO/serial-adapter
-	branch = master
 [submodule "zigbee-adapter"]
 	path = zigbee-adapter
 	url = https://github.com/WebThingsIO/zigbee-adapter
