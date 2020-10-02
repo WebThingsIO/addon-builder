@@ -46,7 +46,6 @@ if [ -z "${ADAPTERS}" ]; then
     Candle-manager-addon:python
     generic-sensors-adapter:node
     insteon-adapter:node
-    lg-tv-adapter:node
     max-adapter:node
     medisana-ks250-adapter:node
     microblocks-adapter:node
