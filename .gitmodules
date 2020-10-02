@@ -1,7 +1,3 @@
-[submodule "gpio-adapter"]
-	path = gpio-adapter
-	url = https://github.com/WebThingsIO/gpio-adapter
-	branch = master
 [submodule "serial-adapter"]
 	path = serial-adapter
 	url = https://github.com/WebThingsIO/serial-adapter

@@ -45,7 +45,6 @@ if [ -z "${ADAPTERS}" ]; then
     bmp280-adapter:node
     Candle-manager-addon:python
     generic-sensors-adapter:node
-    gpio-adapter:node
     homekit-adapter:node
     insteon-adapter:node
     lg-tv-adapter:node
@@ -77,7 +76,6 @@ case "${ADDON_ARCH}" in
       blinkt-adapter
       bmp280-adapter
       generic-sensors-adapter
-      gpio-adapter
       sense-hat-adapter
     )
     ;;
