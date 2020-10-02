@@ -45,7 +45,6 @@ if [ -z "${ADAPTERS}" ]; then
     bmp280-adapter:node
     Candle-manager-addon:python
     generic-sensors-adapter:node
-    homekit-adapter:node
     insteon-adapter:node
     lg-tv-adapter:node
     max-adapter:node

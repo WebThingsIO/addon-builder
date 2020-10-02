@@ -13,9 +13,6 @@
 [submodule "microblocks-adapter"]
 	path = microblocks-adapter
 	url = https://github.com/bromagosa/microblocks-adapter
-[submodule "homekit-adapter"]
-	path = homekit-adapter
-	url = https://github.com/WebThingsIO/homekit-adapter
 [submodule "lg-tv-adapter"]
 	path = lg-tv-adapter
 	url = https://github.com/WebThingsIO/lg-tv-adapter
