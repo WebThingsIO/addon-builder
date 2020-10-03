@@ -55,7 +55,6 @@ if [ -z "${ADAPTERS}" ]; then
     sense-hat-adapter:python
     sensor-tag-adapter:node
     x10-cm11-adapter:node
-    xiaomi-temperature-humidity-sensor-adapter:node
   )
 fi
 
