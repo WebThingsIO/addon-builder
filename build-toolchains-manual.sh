@@ -24,15 +24,18 @@ languages=(
   #python:linux-arm:3.5.10
   #python:linux-arm:3.6.12
   #python:linux-arm:3.7.9
-  #python:linux-arm:3.8.5
+  #python:linux-arm:3.8.6
+  #python:linux-arm:3.9.0
   #python:linux-arm64:3.5.10
   #python:linux-arm64:3.6.12
   #python:linux-arm64:3.7.9
-  #python:linux-arm64:3.8.5
+  #python:linux-arm64:3.8.6
+  #python:linux-arm64:3.9.0
   #python:linux-x64:3.5.10
   #python:linux-x64:3.6.12
   #python:linux-x64:3.7.9
-  #python:linux-x64:3.8.5
+  #python:linux-x64:3.8.6
+  #python:linux-x64:3.9.0
 )
 
 for lang in ${languages[@]}; do
