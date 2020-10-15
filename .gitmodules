@@ -19,9 +19,6 @@
 [submodule "x10-cm11-adapter"]
 	path = x10-cm11-adapter
 	url = https://github.com/AlanDThiessen/x10-cm11-adapter
-[submodule "generic-sensors-adapter"]
-	path = generic-sensors-adapter
-	url = https://github.com/rzr/mozilla-iot-generic-sensors-adapter
 [submodule "sense-hat-adapter"]
 	path = sense-hat-adapter
 	url = https://github.com/rzr/sense-hat-webthing

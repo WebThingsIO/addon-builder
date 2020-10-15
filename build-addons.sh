@@ -43,7 +43,6 @@ if [ -z "${ADAPTERS}" ]; then
     awox-mesh-light-adapter:python
     blinkt-adapter:node
     Candle-manager-addon:python
-    generic-sensors-adapter:node
     max-adapter:node
     medisana-ks250-adapter:node
     microblocks-adapter:node
@@ -65,7 +64,6 @@ case "${ADDON_ARCH}" in
     SKIP_ADAPTERS+=(
       awox-mesh-light-adapter
       blinkt-adapter
-      generic-sensors-adapter
       sense-hat-adapter
     )
     ;;
