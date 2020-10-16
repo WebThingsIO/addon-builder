@@ -40,16 +40,13 @@ mkdir -p builder
 # If no adapters were provided via the environment, build them all
 if [ -z "${ADAPTERS}" ]; then
   ADAPTERS=(
-    awox-mesh-light-adapter:python
     blinkt-adapter:node
     Candle-manager-addon:python
     max-adapter:node
-    medisana-ks250-adapter:node
     microblocks-adapter:node
     mi-flora-adapter:node
     mysensors-adapter:python
     p1-adapter:python
-    sense-hat-adapter:python
     sensor-tag-adapter:node
     x10-cm11-adapter:node
   )
@@ -62,9 +59,7 @@ case "${ADDON_ARCH}" in
   darwin-x64)
     RPXC=
     SKIP_ADAPTERS+=(
-      awox-mesh-light-adapter
       blinkt-adapter
-      sense-hat-adapter
     )
     ;;
 
@@ -76,7 +71,6 @@ case "${ADDON_ARCH}" in
     RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     SKIP_ADAPTERS+=(
       blinkt-adapter
-      sense-hat-adapter
     )
     ;;
 
@@ -84,7 +78,6 @@ case "${ADDON_ARCH}" in
     RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
     SKIP_ADAPTERS+=(
       blinkt-adapter
-      sense-hat-adapter
     )
     ;;
 

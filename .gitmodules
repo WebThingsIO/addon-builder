@@ -7,9 +7,6 @@
 [submodule "sensor-tag-adapter"]
 	path = sensor-tag-adapter
 	url = https://github.com/tim-hellhake/sensor-tag-adapter
-[submodule "medisana-ks250-adapter"]
-	path = medisana-ks250-adapter
-	url = https://github.com/tim-hellhake/medisana-ks250-adapter
 [submodule "max-adapter"]
 	path = max-adapter
 	url = https://github.com/tim-hellhake/max-adapter
@@ -19,12 +16,6 @@
 [submodule "x10-cm11-adapter"]
 	path = x10-cm11-adapter
 	url = https://github.com/AlanDThiessen/x10-cm11-adapter
-[submodule "sense-hat-adapter"]
-	path = sense-hat-adapter
-	url = https://github.com/rzr/sense-hat-webthing
-[submodule "awox-mesh-light-adapter"]
-	path = awox-mesh-light-adapter
-	url = https://github.com/rzr/awox-mesh-light-webthing
 [submodule "Candle-manager-addon"]
 	path = Candle-manager-addon
 	url = https://github.com/createcandle/Candle-manager-addon
