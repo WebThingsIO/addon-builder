@@ -7,9 +7,6 @@
 [submodule "sensor-tag-adapter"]
 	path = sensor-tag-adapter
 	url = https://github.com/tim-hellhake/sensor-tag-adapter
-[submodule "max-adapter"]
-	path = max-adapter
-	url = https://github.com/tim-hellhake/max-adapter
 [submodule "blinkt-adapter"]
 	path = blinkt-adapter
 	url = https://github.com/pchri/blinkt-adapter
