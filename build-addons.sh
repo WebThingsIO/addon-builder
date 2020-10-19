@@ -42,8 +42,6 @@ if [ -z "${ADAPTERS}" ]; then
   ADAPTERS=(
     blinkt-adapter:node
     Candle-manager-addon:python
-    max-adapter:node
-    microblocks-adapter:node
     mi-flora-adapter:node
     mysensors-adapter:python
     p1-adapter:python

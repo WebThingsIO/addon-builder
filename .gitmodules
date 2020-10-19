@@ -1,6 +1,3 @@
-[submodule "microblocks-adapter"]
-	path = microblocks-adapter
-	url = https://github.com/bromagosa/microblocks-adapter
 [submodule "mi-flora-adapter"]
 	path = mi-flora-adapter
 	url = https://github.com/tim-hellhake/mi-flora-adapter
