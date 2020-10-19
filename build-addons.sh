@@ -45,7 +45,6 @@ if [ -z "${ADAPTERS}" ]; then
     mi-flora-adapter:node
     mysensors-adapter:python
     p1-adapter:python
-    sensor-tag-adapter:node
     x10-cm11-adapter:node
   )
 fi

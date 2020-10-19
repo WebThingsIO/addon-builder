@@ -1,9 +1,6 @@
 [submodule "mi-flora-adapter"]
 	path = mi-flora-adapter
 	url = https://github.com/tim-hellhake/mi-flora-adapter
-[submodule "sensor-tag-adapter"]
-	path = sensor-tag-adapter
-	url = https://github.com/tim-hellhake/sensor-tag-adapter
 [submodule "blinkt-adapter"]
 	path = blinkt-adapter
 	url = https://github.com/pchri/blinkt-adapter
