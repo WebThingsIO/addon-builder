@@ -40,7 +40,6 @@ mkdir -p builder
 # If no adapters were provided via the environment, build them all
 if [ -z "${ADAPTERS}" ]; then
   ADAPTERS=(
-    blinkt-adapter:node
     Candle-manager-addon:python
     mi-flora-adapter:node
     mysensors-adapter:python
@@ -48,33 +47,14 @@ if [ -z "${ADAPTERS}" ]; then
   )
 fi
 
-SKIP_ADAPTERS=()
-
 # Set up architecture overrides
 case "${ADDON_ARCH}" in
   darwin-x64)
     RPXC=
-    SKIP_ADAPTERS+=(
-      blinkt-adapter
-    )
     ;;
 
-  linux-arm)
+  linux-arm|linux-arm64|linux-x64)
     RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
-    ;;
-
-  linux-arm64)
-    RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
-    SKIP_ADAPTERS+=(
-      blinkt-adapter
-    )
-    ;;
-
-  linux-x64)
-    RPXC="docker run --rm -t -v $PWD:/build webthingsio/toolchain-${ADDON_ARCH}-${LANGUAGE_NAME}-${LANGUAGE_VERSION}"
-    SKIP_ADAPTERS+=(
-      blinkt-adapter
-    )
     ;;
 
   *)
@@ -91,11 +71,7 @@ for ADAPTER in ${ADAPTERS[@]}; do
     continue
   fi
 
-  if [[ " ${SKIP_ADAPTERS[@]} " =~ " ${adapter} " ]]; then
-    echo "====="
-    echo "===== Skipping ${adapter} for ${ADDON_ARCH} ====="
-    echo "====="
-  elif [ -n "$RPXC" ]; then
+  if [ -n "$RPXC" ]; then
     ${RPXC} bash -c "cd /build/${adapter}; ../build-adapter.sh ${ADDON_ARCH}"
   else
     pushd ${adapter}
