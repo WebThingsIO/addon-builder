@@ -1,6 +1,3 @@
-[submodule "mi-flora-adapter"]
-	path = mi-flora-adapter
-	url = https://github.com/tim-hellhake/mi-flora-adapter
 [submodule "Candle-manager-addon"]
 	path = Candle-manager-addon
 	url = https://github.com/createcandle/Candle-manager-addon

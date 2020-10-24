@@ -41,7 +41,6 @@ mkdir -p builder
 if [ -z "${ADAPTERS}" ]; then
   ADAPTERS=(
     Candle-manager-addon:python
-    mi-flora-adapter:node
     mysensors-adapter:python
     p1-adapter:python
   )
