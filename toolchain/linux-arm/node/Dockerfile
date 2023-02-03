@@ -1,4 +1,4 @@
-FROM balenalib/raspberry-pi-debian:buster
+FROM balenalib/raspberry-pi-debian:bullseye
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
