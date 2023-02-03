@@ -13,29 +13,41 @@ languages=(
   #node:linux-arm:10
   node:linux-arm:12
   node:linux-arm:14
+  node:linux-arm:16
+  node:linux-arm:18
   #node:linux-arm64:8
   #node:linux-arm64:10
   #node:linux-arm64:12
   #node:linux-arm64:14
+  #node:linux-arm64:16
+  #node:linux-arm64:18
   #node:linux-x64:8
   #node:linux-x64:10
   #node:linux-x64:12
   #node:linux-x64:14
+  #node:linux-x64:16
+  #node:linux-x64:18
   #python:linux-arm:3.5.10
   #python:linux-arm:3.6.12
   #python:linux-arm:3.7.9
   #python:linux-arm:3.8.6
-  #python:linux-arm:3.9.0
+  #python:linux-arm:3.9.16
+  #python:linux-arm:3.10.9
+  #python:linux-arm:3.11.1
   #python:linux-arm64:3.5.10
   #python:linux-arm64:3.6.12
   #python:linux-arm64:3.7.9
   #python:linux-arm64:3.8.6
-  #python:linux-arm64:3.9.0
+  #python:linux-arm64:3.9.16
+  #python:linux-arm64:3.10.9
+  #python:linux-arm64:3.11.1
   #python:linux-x64:3.5.10
   #python:linux-x64:3.6.12
   #python:linux-x64:3.7.9
   #python:linux-x64:3.8.6
-  #python:linux-x64:3.9.0
+  #python:linux-x64:3.9.16
+  #python:linux-x64:3.10.9
+  #python:linux-x64:3.11.1
 )
 
 for lang in ${languages[@]}; do
