@@ -1,4 +1,4 @@
-FROM arm64v8/debian:buster
+FROM arm64v8/debian:bullseye
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
