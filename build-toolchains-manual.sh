@@ -11,10 +11,10 @@
 languages=(
   #node:linux-arm:8
   #node:linux-arm:10
-  node:linux-arm:12
-  node:linux-arm:14
-  node:linux-arm:16
-  node:linux-arm:18
+  #node:linux-arm:12
+  #node:linux-arm:14
+  #node:linux-arm:16
+  #node:linux-arm:18
   #node:linux-arm64:8
   #node:linux-arm64:10
   #node:linux-arm64:12
@@ -38,7 +38,7 @@ languages=(
   #python:linux-arm64:3.6.12
   #python:linux-arm64:3.7.9
   #python:linux-arm64:3.8.6
-  #python:linux-arm64:3.9.16
+  python:linux-arm64:3.9.16
   #python:linux-arm64:3.10.9
   #python:linux-arm64:3.11.1
   #python:linux-x64:3.5.10
@@ -68,8 +68,8 @@ for lang in ${languages[@]}; do
       docker build --build-arg PYTHON_VERSION=${version} -t ${image} ${toolchain}/${language}
     fi
 
-    docker tag ${image} webthingsio/${image}:latest
-    docker push webthingsio/${image}:latest
+    docker tag ${image} createcandle/${image}:latest
+    docker push createcandle/${image}:latest
 
     echo
   done
