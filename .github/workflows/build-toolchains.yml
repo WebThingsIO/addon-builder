@@ -42,7 +42,7 @@ jobs:
           docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push images
         run: |
-          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+          echo "${{ secrets.DOCKER_HUB_PAT }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
           language=$(echo ${{ matrix.language }} | cut -d: -f1)
           version=$(echo ${{ matrix.language }} | cut -d: -f2)
           short_version=$(echo $version | cut -d. -f 1-2)
