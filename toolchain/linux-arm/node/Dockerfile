@@ -2,9 +2,7 @@ FROM balenalib/raspberry-pi-debian:buster
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
-RUN curl https://apt.matrix.one/doc/apt-key.gpg | apt-key add - && \
-    echo "deb https://apt.matrix.one/raspbian buster main" | tee /etc/apt/sources.list.d/matrixlabs.list && \
-    apt update && \
+RUN apt update && \
     apt dist-upgrade -y && \
     apt install -y \
         autoconf \
@@ -20,7 +18,6 @@ RUN curl https://apt.matrix.one/doc/apt-key.gpg | apt-key add - && \
         libbz2-dev \
         libeigen3-dev \
         liblzma-dev \
-        libmatrixio-creator-hal-dev \
         libudev-dev \
         pkg-config \
         python \
