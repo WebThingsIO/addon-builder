@@ -28,8 +28,6 @@ RUN apt update && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
     bash -c "export NVM_DIR=\${HOME}/.nvm && \
         source \${NVM_DIR}/nvm.sh && \
-        nvm install ${NODE_VERSION} && \
-        nvm use ${NODE_VERSION} && \
         npm config -g set unsafe-perm true && \
         npm config -g set cache /tmp/.npm && \
         nvm install-latest-npm && \
