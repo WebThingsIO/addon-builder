@@ -30,5 +30,4 @@ RUN apt update && \
         source \${NVM_DIR}/nvm.sh && \
         npm config -g set unsafe-perm true && \
         npm config -g set cache /tmp/.npm && \
-        nvm install-latest-npm && \
         nvm cache clear"
