@@ -11,8 +11,8 @@
 languages=(
   #node:linux-arm:8
   #node:linux-arm:10
-  node:linux-arm:12
-  node:linux-arm:14
+  #node:linux-arm:12
+  #node:linux-arm:14
   #node:linux-arm64:8
   #node:linux-arm64:10
   #node:linux-arm64:12
@@ -21,6 +21,7 @@ languages=(
   #node:linux-x64:10
   #node:linux-x64:12
   #node:linux-x64:14
+  node:linux-x64:20
   #python:linux-arm:3.5.10
   #python:linux-arm:3.6.12
   #python:linux-arm:3.7.9
