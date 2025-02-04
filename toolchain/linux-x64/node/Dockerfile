@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
@@ -20,7 +20,7 @@ RUN apt update && \
         liblzma-dev \
         libudev-dev \
         pkg-config \
-        python \
+        python3 \
         sudo \
         zlib1g-dev && \
     apt clean && \
@@ -28,6 +28,5 @@ RUN apt update && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
     bash -c "export NVM_DIR=\${HOME}/.nvm && \
         source \${NVM_DIR}/nvm.sh && \
-        npm config -g set unsafe-perm true && \
         npm config -g set cache /tmp/.npm && \
         nvm cache clear"
