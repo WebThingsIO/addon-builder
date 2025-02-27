@@ -1,4 +1,4 @@
-FROM balenalib/raspberry-pi-debian:bookworm
+FROM --platform=linux/arm/v7 balenalib/raspberry-pi-debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
