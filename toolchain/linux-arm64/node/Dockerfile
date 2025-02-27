@@ -1,4 +1,4 @@
-FROM arm64v8/debian:bookworm
+FROM --platform=linux/arm64 arm64v8/debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
