@@ -21,10 +21,10 @@ jobs:
           'node:14',
           'node:20',
           #'python:3.5.10',
-          'python:3.6.12',
-          'python:3.7.9',
-          'python:3.8.6',
-          'python:3.9.0',
+          #'python:3.6.12',
+          #'python:3.7.9',
+          #'python:3.8.6',
+          #'python:3.9.0',
         ]
         platform: [
           'linux-arm',
