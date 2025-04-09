@@ -13,10 +13,12 @@ languages=(
   #node:linux-arm:10
   #node:linux-arm:12
   #node:linux-arm:14
+  #node:linux-arm:20
   #node:linux-arm64:8
   #node:linux-arm64:10
   #node:linux-arm64:12
   #node:linux-arm64:14
+  #node:linux-arm64:20
   #node:linux-x64:8
   #node:linux-x64:10
   #node:linux-x64:12
