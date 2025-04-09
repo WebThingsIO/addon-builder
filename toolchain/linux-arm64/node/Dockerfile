@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 arm64v8/debian:bookworm
+FROM --platform=linux/arm64 debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION
@@ -25,7 +25,7 @@ RUN apt update && \
         zlib1g-dev && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash && \
     bash -c "export NVM_DIR=\${HOME}/.nvm && \
         source \${NVM_DIR}/nvm.sh && \
         npm config -g set cache /tmp/.npm && \
