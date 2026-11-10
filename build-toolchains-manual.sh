@@ -14,16 +14,19 @@ languages=(
   #node:linux-arm:12
   #node:linux-arm:14
   #node:linux-arm:20
+  # Note that Node.js 24 does not have armv7l binaries
   #node:linux-arm64:8
   #node:linux-arm64:10
   #node:linux-arm64:12
   #node:linux-arm64:14
   #node:linux-arm64:20
+  #node:linux-arm64:24
   #node:linux-x64:8
   #node:linux-x64:10
   #node:linux-x64:12
   #node:linux-x64:14
-  node:linux-x64:20
+  #node:linux-x64:20
+  node:linux-x64:24
   #python:linux-arm:3.5.10
   #python:linux-arm:3.6.12
   #python:linux-arm:3.7.9
